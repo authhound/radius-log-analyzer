@@ -1,0 +1,30 @@
+{
+  "id": "freeradius/tls-handshake-failed",
+  "format": "freeradius",
+  "failure_stage": "client_hello",
+  "title": "TLS handshake failed (generic)",
+  "plain_english": "The TLS handshake between the client and the server broke off before completing. If a more specific signature (unknown CA, expired certificate) was also detected, trust that one — this generic failure is what's left when the client aborts without saying why, or when protocol versions/ciphers simply don't overlap.",
+  "match": {
+    "any": [
+      "SSL_read failed",
+      "TLS session fails",
+      "TLS_accept: Error in error",
+      "TLS receive handshake failed"
+    ]
+  },
+  "priority": 50,
+  "causes": [
+    {
+      "cause": "TLS version mismatch — old supplicants (printers, scanners, embedded devices) may only speak TLS 1.0/1.1 while the server enforces a higher minimum.",
+      "next_check": "Check tls_min_version in mods-available/eap and what the failing device supports; test by temporarily lowering the minimum for that device class."
+    },
+    {
+      "cause": "The user cancelled a certificate-trust prompt on the device, so the supplicant tore the handshake down.",
+      "next_check": "Reproduce on a device you can watch: does a 'trust this certificate?' dialog appear at connect time?"
+    },
+    {
+      "cause": "No common cipher suite between the client and the server's OpenSSL policy.",
+      "next_check": "Look a few lines above the failure in radiusd -X for the ClientHello details, and review cipher_list in the eap TLS configuration."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Date:          7/5/2026 8:17:40 AM
+Event ID:      6273
+Task Category: Network Policy Server
+Level:         Information
+Keywords:      Audit Failure
+Computer:      NPS02.corp.example.com
+Description:
+Network Policy Server denied access to a user.
+
+User:
+	Security ID:			CORP\contractor7
+	Account Name:			contractor7
+	Account Domain:			CORP
+
+Client Machine:
+	Called Station Identifier:		AA-BB-CC-DD-EE-01:CorpWiFi
+	Calling Station Identifier:		77-88-99-AA-BB-CC
+
+NAS:
+	NAS IPv4 Address:		10.20.0.13
+	NAS Identifier:			wlc-02
+	NAS Port-Type:			Wireless - IEEE 802.11
+
+RADIUS Client:
+	Client Friendly Name:		WLC-Floor2
+	Client IP Address:			10.20.0.13
+
+Authentication Details:
+	Connection Request Policy Name:	Secure Wireless Connections
+	Network Policy Name:		-
+	Authentication Provider:		Windows
+	Authentication Server:		NPS02.corp.example.com
+	Authentication Type:		PEAP
+	EAP Type:			-
+	Account Session Identifier:		-
+	Reason Code:			48
+	Reason:				The connection request did not match any configured network policy.

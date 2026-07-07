@@ -1,0 +1,30 @@
+{
+  "id": "nps/reason-code-262",
+  "format": "nps",
+  "failure_stage": "shared_secret",
+  "title": "Reason Code 262 — message signature not verified (shared secret mismatch)",
+  "plain_english": "The RADIUS message from the NAS failed cryptographic verification — 'the signature was not verified'. In practice this means the shared secret configured on the NAS and the one in the NPS RADIUS Client entry don't match. The user's credentials were never evaluated; fix the secret, not the account.",
+  "match": {
+    "any": [
+      "Reason Code:\\s*262\\b",
+      "The supplied message is incomplete",
+      "signature was not verified"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The shared secret on the NAS differs from the one stored in NPS → RADIUS Clients for that NAS entry.",
+      "next_check": "Re-enter the secret on BOTH sides (retype, don't paste — hidden whitespace is a classic), then retest."
+    },
+    {
+      "cause": "The request is matched to the wrong RADIUS Client entry — the NAS's source IP changed (DHCP, NAT, new controller) and now hits an entry with a different secret.",
+      "next_check": "Compare the source/NAS IP in this event with the address ranges of your RADIUS Client entries in the NPS console."
+    },
+    {
+      "cause": "Two RADIUS Client entries overlap (e.g. a subnet entry and a host entry) with different secrets.",
+      "next_check": "Audit RADIUS Client entries for overlapping addresses and consolidate to one entry per NAS."
+    }
+  ],
+  "doc_slug": "nps-event-6273-reason-code-262"
+}

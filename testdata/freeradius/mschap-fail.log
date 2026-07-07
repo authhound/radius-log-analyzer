@@ -1,0 +1,16 @@
+(8) eap_peap: Got tunneled Access-Request
+(8)   User-Name = "alice"
+(8) eap_peap: Setting default EAP type for tunneled EAP session
+(8) Virtual server inner-tunnel received request
+(8)   EAP-Message = 0x020900401a0209003b31...
+(8) authenticate {
+(8) mschap: Creating challenge hash with username: alice
+(8) mschap: Client is using MS-CHAPv2
+(8) mschap: ERROR: MS-CHAP2-Response is incorrect
+(8)     [mschap] = reject
+(8)   } # authenticate = reject
+(8) eap_peap: ERROR: Tunneled authentication was rejected
+(8) eap_peap: FAILURE
+(8) eap: Sending EAP Failure (code 4) ID 9 length 4
+(8) Login incorrect (mschap: ERROR: MS-CHAP2-Response is incorrect): [alice] (from client office-ap port 0 via TLS tunnel)
+(8) Sent Access-Reject Id 121 from 192.168.10.2:1812 to 192.168.10.5:49154 length 44

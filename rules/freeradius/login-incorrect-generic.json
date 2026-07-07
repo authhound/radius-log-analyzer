@@ -1,0 +1,23 @@
+{
+  "id": "freeradius/login-incorrect-generic",
+  "format": "freeradius",
+  "failure_stage": "inner_auth",
+  "title": "Access-Reject sent (generic 'Login incorrect')",
+  "plain_english": "The server processed the request and deliberately rejected it. 'Login incorrect' is FreeRADIUS's summary line — the actual reason is in the module output just above it in the debug log. If no more specific signature was matched above, the reject likely comes from a policy or a module this analyzer doesn't have a rule for yet.",
+  "match": {
+    "any": [
+      "Login incorrect"
+    ]
+  },
+  "priority": 10,
+  "causes": [
+    {
+      "cause": "A module in the authenticate/authorize chain returned reject — the parenthesised text after 'Login incorrect' names it.",
+      "next_check": "Read the text in parentheses on the 'Login incorrect' line and the ~20 debug lines before it; that names the module and the exact check that failed."
+    },
+    {
+      "cause": "An explicit reject in your policy (unlang) — e.g. a group check or NAS filter.",
+      "next_check": "Search the debug output for 'reject' inside the policy sections (post-auth, authorize) to see which condition fired."
+    }
+  ]
+}

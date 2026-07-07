@@ -1,0 +1,30 @@
+{
+  "id": "freeradius/tls-unknown-ca",
+  "format": "freeradius",
+  "failure_stage": "cert_validation",
+  "title": "Client rejected the server certificate — 'unknown CA' TLS alert",
+  "plain_english": "The TLS handshake was aborted by the client device: it sent a fatal 'unknown CA' alert, meaning it does not trust the certificate your RADIUS server presented. This is a client-side trust decision — the handshake died before the server ever saw the user's credentials.",
+  "match": {
+    "any": [
+      "TLS Alert read:fatal:unknown CA",
+      "alert unknown ca",
+      "unknown_ca"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The client device doesn't have — or doesn't trust — the CA that signed your RADIUS server certificate. Typical right after switching from a self-signed certificate or migrating to a new CA.",
+      "next_check": "On one failing device, confirm the CA certificate is installed and that the Wi-Fi/802.1X profile actually references it (Windows and Android profiles pin specific CAs; installing the cert alone is not enough)."
+    },
+    {
+      "cause": "The server sends an incomplete chain — the intermediate CA is missing, so clients cannot build a path to a trusted root.",
+      "next_check": "Verify certificate_file in mods-available/eap contains the server cert followed by every intermediate; test the presented chain with eapol_test or openssl s_client."
+    },
+    {
+      "cause": "Clients validate the server name and the certificate's CN/SAN changed at renewal.",
+      "next_check": "Compare the certificate's subjectAltName with the server name configured in the clients' Wi-Fi profile."
+    }
+  ],
+  "doc_slug": "freeradius-tls-alert-unknown-ca"
+}

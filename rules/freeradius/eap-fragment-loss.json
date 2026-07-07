@@ -1,0 +1,28 @@
+{
+  "id": "freeradius/eap-fragment-loss",
+  "format": "freeradius",
+  "failure_stage": "eap_fragmentation",
+  "title": "Conversation stalls mid-EAP — retransmissions suggest lost fragments",
+  "plain_english": "The exchange died in the middle of the EAP conversation: the NAS keeps retransmitting the same request while the client never answers the server's last challenge. The classic culprit is the server's TLS certificate chain being split into large RADIUS packets that get dropped between server and NAS — the client literally never receives them.",
+  "match": {
+    "any": [
+      "Discarding duplicate request",
+      "Sending duplicate reply"
+    ]
+  },
+  "priority": 70,
+  "causes": [
+    {
+      "cause": "The server certificate chain is large, producing RADIUS packets over the path MTU; a firewall or router drops the fragmented UDP.",
+      "next_check": "Set fragment_size = 1024 in the eap module configuration, trim unnecessary certificates from the chain, and retest."
+    },
+    {
+      "cause": "A firewall/NAT device between NAS and server drops fragmented UDP or long-lived UDP 'connections'.",
+      "next_check": "Run tcpdump on both the RADIUS server and (if possible) the NAS side, and watch where the large Access-Challenge packets disappear."
+    },
+    {
+      "cause": "The supplicant silently gave up — for example it is waiting on a user prompt (certificate trust dialog) that nobody clicked.",
+      "next_check": "Watch a failing client's own supplicant logs while the retransmissions happen; on Windows check the WLAN-AutoConfig event log."
+    }
+  ]
+}

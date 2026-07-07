@@ -1,0 +1,15 @@
+# Cloudflare Pages configuration.
+#
+# One-time setup:
+#   1. wrangler d1 create radius-tools        -> paste the database_id below
+#   2. wrangler d1 execute radius-tools --file=schema.sql --remote
+#   3. wrangler pages deploy                  (or connect the repo in the dashboard)
+
+name = "radius-log-analyzer"
+compatibility_date = "2026-01-01"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "radius-tools"
+database_id = "REPLACE-WITH-OUTPUT-OF-wrangler-d1-create"

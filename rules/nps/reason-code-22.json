@@ -1,0 +1,28 @@
+{
+  "id": "nps/reason-code-22",
+  "format": "nps",
+  "failure_stage": "client_hello",
+  "title": "Reason Code 22 — EAP type cannot be processed",
+  "plain_english": "The client asked for an EAP method that this NPS server couldn't run for this connection. Very often this isn't about the client at all: if the NPS server's own certificate is broken or missing, PEAP can't even initialize, and every client gets this error regardless of what it requests.",
+  "match": {
+    "any": [
+      "Reason Code:\\s*22\\b",
+      "EAP [Tt]ype cannot be processed"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The NPS server certificate is missing, expired, or lost its private key, so PEAP/EAP-TLS cannot start. If ALL clients started failing at once, start here.",
+      "next_check": "Open the network policy → Constraints → Authentication Methods → PEAP → Edit: does it still show a valid certificate? Also check the computer certificate store on the NPS server for expiry."
+    },
+    {
+      "cause": "Client and policy disagree on the EAP method — the device is configured for EAP-TLS while the policy only offers PEAP-MSCHAPv2, or vice versa.",
+      "next_check": "Compare the 'EAP Type' field in this event with the EAP types listed in the matched network policy's constraints."
+    },
+    {
+      "cause": "The EAP configuration blob in the policy is corrupted — a known aftermath of certificate renewals and NPS config imports.",
+      "next_check": "In the policy's PEAP settings, remove and re-add the EAP type, reselect the server certificate, and save."
+    }
+  ]
+}

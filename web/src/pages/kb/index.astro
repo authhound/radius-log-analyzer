@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const kbPages = (await getCollection('kb')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
+---
+
+<Base
+  title="RADIUS & NPS error library — every failure explained"
+  description="Plain-English explanations of common FreeRADIUS errors and Windows NPS event 6273 reason codes, with ranked causes and concrete next checks."
+>
+  <h1>RADIUS &amp; NPS error library</h1>
+  <p class="lede">
+    Each page explains one failure signature the way a colleague would: what
+    it actually means, why it happens, and the exact next thing to check.
+  </p>
+  <ul class="kb-list">
+    {kbPages.map((page) => (
+      <li>
+        <a href={`/kb/${page.id}`}>{page.data.title}</a>
+        <p>{page.data.description}</p>
+      </li>
+    ))}
+  </ul>
+  <div class="cta-box">
+    <h2>Staring at a log right now?</h2>
+    <p>
+      Skip the reading — <a href="/analyzer">paste it into the analyzer</a>
+      and get the diagnosis for your specific log in seconds. It runs in your
+      browser; nothing is uploaded.
+    </p>
+  </div>
+</Base>

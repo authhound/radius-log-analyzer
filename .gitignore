@@ -1,0 +1,13 @@
+# Go
+/radius-analyze
+/dist/
+
+# Web
+web/node_modules/
+web/dist/
+web/.astro/
+web/.wrangler/
+
+# Misc
+*.log.bak
+.DS_Store

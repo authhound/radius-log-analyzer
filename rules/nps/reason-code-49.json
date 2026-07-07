@@ -1,0 +1,28 @@
+{
+  "id": "nps/reason-code-49",
+  "format": "nps",
+  "failure_stage": "policy_match",
+  "title": "Reason Code 49 — no connection request policy matched",
+  "plain_english": "The request was rejected one layer earlier than usual: it didn't match any Connection Request Policy, so NPS never even evaluated network policies or credentials. CRPs filter on how/where the request arrived — day and time, NAS address, port type — not on who the user is.",
+  "match": {
+    "any": [
+      "Reason Code:\\s*49\\b",
+      "did not match any connection request policy"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The default 'Use Windows authentication for all users' CRP was deleted, disabled, or reordered below a non-matching one.",
+      "next_check": "In the NPS console under Connection Request Policies, confirm an enabled policy whose conditions cover this request (the default matches everything, all day)."
+    },
+    {
+      "cause": "A CRP condition is too narrow — day/time restrictions or a specific NAS IPv4 address that this NAS doesn't match.",
+      "next_check": "Compare this event's NAS IPv4 Address and timestamp against each CRP's conditions."
+    },
+    {
+      "cause": "The request was meant to be forwarded to another RADIUS server (proxy scenario) and the forwarding CRP doesn't cover it.",
+      "next_check": "If you proxy by realm, check the User Name's realm/suffix in this event against the CRP's realm-matching rules."
+    }
+  ]
+}

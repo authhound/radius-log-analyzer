@@ -1,0 +1,35 @@
+Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Date:          7/4/2026 9:03:52 AM
+Event ID:      6273
+Task Category: Network Policy Server
+Level:         Information
+Keywords:      Audit Failure
+Computer:      NPS01.corp.example.com
+Description:
+Network Policy Server denied access to a user.
+
+User:
+	Security ID:			NULL SID
+	Account Name:			mwilson
+	Account Domain:			CORP
+
+NAS:
+	NAS IPv4 Address:		10.30.0.7
+	NAS Identifier:			branch-switch-02
+	NAS Port-Type:			Ethernet
+
+RADIUS Client:
+	Client Friendly Name:		Branch-Switch-02
+	Client IP Address:			10.30.0.7
+
+Authentication Details:
+	Connection Request Policy Name:	Use Windows authentication for all users
+	Network Policy Name:		-
+	Authentication Provider:		Windows
+	Authentication Server:		NPS01.corp.example.com
+	Authentication Type:		Unauthenticated
+	EAP Type:			-
+	Account Session Identifier:		-
+	Reason Code:			262
+	Reason:				The supplied message is incomplete. The signature was not verified.

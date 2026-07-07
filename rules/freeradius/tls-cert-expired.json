@@ -1,0 +1,30 @@
+{
+  "id": "freeradius/tls-cert-expired",
+  "format": "freeradius",
+  "failure_stage": "cert_validation",
+  "title": "Expired certificate in the TLS handshake",
+  "plain_english": "A certificate involved in the EAP-TLS/PEAP handshake has expired. If the alert was sent by the client, your RADIUS server certificate is past its notAfter date; in EAP-TLS it can equally be the client certificate that expired. Everything worked yesterday and broke today at the same minute for everyone? This is it.",
+  "match": {
+    "any": [
+      "TLS Alert read:fatal:certificate expired",
+      "certificate has expired",
+      "alert certificate expired",
+      "certificate_expired"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The RADIUS server certificate expired — every client starts rejecting the handshake at once.",
+      "next_check": "Run: openssl x509 -enddate -noout -in <server cert> on the file referenced by certificate_file in mods-available/eap."
+    },
+    {
+      "cause": "An individual client certificate expired (EAP-TLS) — one user/device fails while everyone else works.",
+      "next_check": "Check the expiry of the certificate on the failing device; reissue from your CA / re-enroll via SCEP-Intune-AD CS as applicable."
+    },
+    {
+      "cause": "A wrong clock makes a valid certificate look expired (device that sat in a drawer, VM with broken NTP).",
+      "next_check": "Verify the date and time on the failing device and on the RADIUS server before reissuing anything."
+    }
+  ]
+}

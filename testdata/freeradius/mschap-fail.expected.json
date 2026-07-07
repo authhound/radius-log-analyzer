@@ -1,0 +1,5 @@
+{
+  "format": "freeradius",
+  "top": "freeradius/mschap-wrong-password",
+  "matched": ["freeradius/mschap-wrong-password", "freeradius/login-incorrect-generic"]
+}

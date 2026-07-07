@@ -1,0 +1,226 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="RADIUS Log Analyzer — paste your log, get a diagnosis"
+  description="Free in-browser analyzer for FreeRADIUS debug output (radiusd -X) and Windows NPS event log entries. Instant plain-English diagnosis with ranked causes and next checks."
+>
+  <h1>Analyze your RADIUS log</h1>
+  <p class="lede">
+    Paste FreeRADIUS <code>radiusd -X</code> output or a Windows NPS event
+    (6273/6274, copied as text from Event Viewer) below.
+  </p>
+
+  <div class="privacy-note">
+    <span>🔒</span>
+    <span>
+      <strong>Parsing happens in your browser — your log never leaves your
+      machine.</strong> Verify it: open DevTools → Network and watch nothing
+      get sent while you analyze. The parser is
+      <a href="https://github.com/utarafdar/radius-log-analyzer">open source</a>.
+    </span>
+  </div>
+
+  <textarea
+    id="logbox"
+    class="logbox"
+    placeholder="Paste your log here — the full output, not just the error line. More context = better diagnosis."
+    spellcheck="false"></textarea>
+
+  <div class="toolbar">
+    <button class="btn" id="analyze-btn">Analyze</button>
+    <div class="samples">
+      <span>Try an example:</span>
+      <button id="sample-fr">FreeRADIUS</button>
+      <button id="sample-nps">NPS</button>
+    </div>
+  </div>
+
+  <div id="result" class="result hidden" aria-live="polite"></div>
+
+  <div id="waitlist" class="waitlist hidden">
+    <strong>This failure is usually invisible until users complain.</strong>
+    <p>
+      I'm building continuous monitoring that catches it first — leave your
+      work email for early access.
+    </p>
+    <form id="waitlist-form">
+      <input
+        type="email"
+        id="waitlist-email"
+        name="email"
+        placeholder="you@company.com"
+        required
+      />
+      <button class="btn" type="submit">Get early access</button>
+    </form>
+    <p class="fine">No spam, no sharing — one email when it's ready, maybe one question about what broke.</p>
+  </div>
+  <p id="waitlist-thanks" class="hidden">
+    ✅ You're on the list — thank you! I read every signup personally.
+  </p>
+</Base>
+
+<script>
+  import { analyze } from '../lib/parser';
+  import type { Diagnosis, RuleMatch } from '../lib/parser';
+  import sampleFreeradius from '../../../testdata/freeradius/peap-unknown-ca.log?raw';
+  import sampleNps from '../../../testdata/nps/reason-16.log?raw';
+
+  const logbox = document.getElementById('logbox') as HTMLTextAreaElement;
+  const resultEl = document.getElementById('result') as HTMLDivElement;
+  const waitlistEl = document.getElementById('waitlist') as HTMLDivElement;
+  const waitlistForm = document.getElementById('waitlist-form') as HTMLFormElement;
+  const waitlistThanks = document.getElementById('waitlist-thanks') as HTMLParagraphElement;
+
+  let lastSignature = '';
+
+  // Funnel beacons carry only the event name and the matched rule id —
+  // never any log content. They fail silently (e.g. in local dev).
+  function track(name: string, detail = '') {
+    try {
+      const payload = JSON.stringify({ name, detail });
+      if (!navigator.sendBeacon?.('/api/event', new Blob([payload], { type: 'application/json' }))) {
+        fetch('/api/event', { method: 'POST', body: payload, keepalive: true }).catch(() => {});
+      }
+    } catch {
+      /* analytics must never break the tool */
+    }
+  }
+
+  function el<K extends keyof HTMLElementTagNameMap>(
+    tag: K,
+    className: string,
+    text?: string,
+  ): HTMLElementTagNameMap[K] {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  const formatLabels: Record<string, string> = {
+    freeradius: 'FreeRADIUS debug output (radiusd -X)',
+    nps: 'Windows NPS event log',
+  };
+
+  function renderMatch(m: RuleMatch, isTop: boolean): HTMLElement {
+    const card = el('div', 'card');
+    card.appendChild(el('span', 'stage', `stage: ${m.failure_stage}`));
+    card.appendChild(el(isTop ? 'h2' : 'h3', '', m.title));
+    card.appendChild(el('p', '', m.plain_english));
+
+    card.appendChild(el('p', '', 'Likely causes, most likely first:'));
+    const list = el('ol', 'causes');
+    for (const c of m.causes) {
+      const li = el('li', '', c.cause);
+      const next = el('p', 'next-check');
+      const label = el('strong', '', 'Next check: ');
+      next.appendChild(label);
+      next.appendChild(document.createTextNode(c.next_check));
+      li.appendChild(next);
+      list.appendChild(li);
+    }
+    card.appendChild(list);
+
+    if (m.evidence.length > 0) {
+      card.appendChild(el('div', 'evidence', m.evidence.join('\n')));
+    }
+    if (m.doc_slug) {
+      const p = el('p', '');
+      const a = el('a', '', 'Read the full write-up for this failure →');
+      a.setAttribute('href', `/kb/${m.doc_slug}`);
+      p.appendChild(a);
+      card.appendChild(p);
+    }
+    return card;
+  }
+
+  function render(d: Diagnosis) {
+    resultEl.replaceChildren();
+    resultEl.classList.remove('hidden');
+
+    if (d.format === 'unknown') {
+      const card = el('div', 'card');
+      card.appendChild(el('h2', '', "This doesn't look like a RADIUS log we recognize"));
+      card.appendChild(
+        el(
+          'p',
+          '',
+          'Expected FreeRADIUS debug output (run the server with radiusd -X and paste its output) or a Windows NPS event — in Event Viewer, right-click event 6273/6274 and choose "Copy details as text".',
+        ),
+      );
+      resultEl.appendChild(card);
+      track('analyze_failed');
+      return;
+    }
+
+    const meta = el('p', 'also', `Detected: ${formatLabels[d.format] ?? d.format}`);
+    resultEl.appendChild(meta);
+
+    if (d.matches.length === 0) {
+      const card = el('div', 'card');
+      card.appendChild(el('h2', '', 'No known failure signature matched'));
+      card.appendChild(
+        el(
+          'p',
+          '',
+          'The format was recognized, but no rule matched. If this log does show a failure, please open a GitHub issue with a redacted sample — every new signature makes the analyzer better for the next admin.',
+        ),
+      );
+      resultEl.appendChild(card);
+      track('diagnosis_shown', 'no_match');
+      return;
+    }
+
+    resultEl.appendChild(renderMatch(d.matches[0], true));
+    if (d.matches.length > 1) {
+      resultEl.appendChild(el('p', 'also', 'Also detected in this log:'));
+      for (const m of d.matches.slice(1)) {
+        resultEl.appendChild(renderMatch(m, false));
+      }
+    }
+
+    lastSignature = d.matches[0].rule_id;
+    // The waitlist only ever appears AFTER a diagnosis — never gate the result.
+    waitlistEl.classList.remove('hidden');
+    track('diagnosis_shown', lastSignature);
+  }
+
+  document.getElementById('analyze-btn')!.addEventListener('click', () => {
+    const text = logbox.value;
+    if (!text.trim()) {
+      logbox.focus();
+      return;
+    }
+    track('analyze_clicked');
+    render(analyze(text));
+    resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  document.getElementById('sample-fr')!.addEventListener('click', () => {
+    logbox.value = sampleFreeradius;
+  });
+  document.getElementById('sample-nps')!.addEventListener('click', () => {
+    logbox.value = sampleNps;
+  });
+
+  waitlistForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = (document.getElementById('waitlist-email') as HTMLInputElement).value;
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, signature: lastSignature }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      track('waitlist_submitted', lastSignature);
+      waitlistEl.classList.add('hidden');
+      waitlistThanks.classList.remove('hidden');
+    } catch {
+      alert('Could not submit right now — please try again in a moment.');
+    }
+  });
+</script>

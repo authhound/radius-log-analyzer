@@ -1,0 +1,29 @@
+{
+  "id": "nps/reason-code-65",
+  "format": "nps",
+  "failure_stage": "user_account",
+  "title": "Reason Code 65 — denied by the account's Network Access Permission",
+  "plain_english": "Everything else was fine — the user's own AD account says no. The 'Network Access Permission' setting on the account's Dial-in tab is set to 'Deny access', and that overrides your NPS policies. This is a per-account setting, so it typically hits one user while everyone else connects normally.",
+  "match": {
+    "any": [
+      "Reason Code:\\s*65\\b",
+      "Network Access Permission.*[Dd]eny",
+      "denied access.*dial-?in"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The account's Dial-in tab is explicitly set to 'Deny access' (sometimes by an old script, migration, or a well-meaning colleague).",
+      "next_check": "In ADUC, open the user → Dial-in tab → set Network Access Permission to 'Control access through NPS Network Policy'."
+    },
+    {
+      "cause": "Bulk-set msNPAllowDialin attribute from a legacy RAS era still lingering on many accounts.",
+      "next_check": "Query AD for accounts with msNPAllowDialin=FALSE to see whether this is one user or hundreds."
+    },
+    {
+      "cause": "You want NPS policies to be authoritative but the policy still honours per-account settings.",
+      "next_check": "In the matched network policy's properties, enable 'Ignore user account dial-in properties' so the policy decides, not the account flag."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+(6) Received Access-Request Id 118 from 192.168.10.5:49154 to 192.168.10.2:1812 length 232
+(6)   User-Name = "bob"
+(6)   NAS-Port-Type = Wireless-802.11
+(6)   EAP-Message = 0x020800061900
+(6) eap: Peer sent EAP Response (code 2) ID 8 length 6
+(6) eap: Continuing tunnel setup
+(6) eap_peap: Continuing EAP-TLS
+(6) eap_peap: Peer indicated complete TLS record size will be 7
+(6) eap_peap: Got complete TLS record (7 bytes)
+(6) eap_peap: [eaptls verify] = length included
+(6) eap_peap: ERROR: TLS Alert read:fatal:unknown CA
+(6) eap_peap: TLS_accept: Error in error
+(6) eap_peap: ERROR: Failed in __FUNCTION__ (SSL_read): error:14094418:SSL routines:ssl3_read_bytes:tlsv1 alert unknown ca
+(6) eap_peap: ERROR: System call (I/O) error (-1)
+(6) eap_peap: ERROR: TLS receive handshake failed during operation
+(6) eap_peap: ERROR: [eaptls process] = fail
+(6) eap: ERROR: Failed continuing EAP PEAP (25) session.  EAP sub-module failed
+(6) eap: Sending EAP Failure (code 4) ID 8 length 4
+(6) eap: Failed in EAP select
+(6)     [eap] = invalid
+(6)   } # authenticate = invalid
+(6) Failed to authenticate the user
+(6) Post-Auth-Type sub-section not found.  Ignoring.
+(6) Sent Access-Reject Id 118 from 192.168.10.2:1812 to 192.168.10.5:49154 length 44

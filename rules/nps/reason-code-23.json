@@ -1,0 +1,28 @@
+{
+  "id": "nps/reason-code-23",
+  "format": "nps",
+  "failure_stage": "cert_validation",
+  "title": "Reason Code 23 — error during EAP processing (usually the NPS certificate)",
+  "plain_english": "NPS hit an internal error while running EAP. The official text says 'check EAP log files', but in the field this is almost always a problem with the NPS server's OWN certificate — expired, missing its private key, or not meeting 802.1X requirements — rather than anything the client did.",
+  "match": {
+    "any": [
+      "Reason Code:\\s*23\\b",
+      "during the Network Policy Server use of the Extensible Authentication Protocol"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The NPS server certificate expired or its private key is missing (typical after an export/import that dropped the key).",
+      "next_check": "On the NPS server, open certlm.msc → Personal: confirm a valid certificate with the Server Authentication EKU and the key icon (private key present)."
+    },
+    {
+      "cause": "The certificate was renewed but the network policy still points at the old one.",
+      "next_check": "Open the network policy's PEAP/EAP-TLS settings and reselect the current certificate, then save — NPS does not always follow renewals automatically."
+    },
+    {
+      "cause": "Revocation checking fails — NPS can't reach the CRL/OCSP endpoint for its certificate chain.",
+      "next_check": "Check the CAPI2 operational event log on the NPS server and test CRL URL reachability from that box."
+    }
+  ]
+}

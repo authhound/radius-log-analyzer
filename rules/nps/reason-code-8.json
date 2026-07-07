@@ -1,0 +1,28 @@
+{
+  "id": "nps/reason-code-8",
+  "format": "nps",
+  "failure_stage": "inner_auth",
+  "title": "Reason Code 8 — the user account does not exist",
+  "plain_english": "NPS looked up the account name the device sent and found nothing. The password never got checked — the identity itself didn't resolve. The interesting question is what name the device actually transmitted, and that's printed right in this event.",
+  "match": {
+    "any": [
+      "Reason Code:\\s*8\\b",
+      "user account does not exist"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The username is typed on the device in a format NPS can't resolve — bare name vs DOMAIN\\\\user vs user@domain (UPN), or with a stray space.",
+      "next_check": "Compare the 'Account Name' in this event with the real sAMAccountName/UPN in AD; re-enter it on the device in the working format."
+    },
+    {
+      "cause": "The device is doing machine authentication ('host/NAME' identity) but the computer account doesn't exist in the domain — common for BYOD or freshly re-imaged machines.",
+      "next_check": "If the User Name starts with 'host/', check whether that computer object exists in AD and is not disabled."
+    },
+    {
+      "cause": "The account lives in a different domain/forest and the trust path or the NPS server's search scope doesn't reach it.",
+      "next_check": "Verify the domain prefix in the event and confirm the trust between that domain and the NPS server's domain."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "nps/event-6273-denied-generic",
+  "format": "nps",
+  "failure_stage": "policy_match",
+  "title": "NPS denied access (Event 6273)",
+  "plain_english": "Network Policy Server denied this connection attempt. The decisive detail is the 'Reason Code' line of the event — if a more specific diagnosis appears above this one, that's your answer. If this generic result is all you got, the pasted text is probably missing the Reason Code / Reason lines.",
+  "match": {
+    "any": [
+      "Network Policy Server denied access to a user"
+    ]
+  },
+  "priority": 5,
+  "causes": [
+    {
+      "cause": "The pasted event text is incomplete — the Reason Code and Reason lines carry the actual diagnosis.",
+      "next_check": "In Event Viewer, right-click the 6273 event → 'Copy details as text', and paste the WHOLE event including the Authentication Details section."
+    },
+    {
+      "cause": "The failure has a Reason Code this analyzer doesn't know yet.",
+      "next_check": "Read the 'Reason:' line of the event — it is Microsoft's own one-line explanation — and consider opening an issue so a rule can be added for it."
+    }
+  ]
+}

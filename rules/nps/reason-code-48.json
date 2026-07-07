@@ -1,0 +1,29 @@
+{
+  "id": "nps/reason-code-48",
+  "format": "nps",
+  "failure_stage": "policy_match",
+  "title": "Reason Code 48 — no network policy matched",
+  "plain_english": "Authentication may even have been possible — but the connection attempt fell through every network policy without matching one, so NPS rejected it by default. The event tells you who tried; your policy conditions tell you why none of them claimed the request.",
+  "match": {
+    "any": [
+      "Reason Code:\\s*48\\b",
+      "did not match any network policy"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The user or computer isn't in the AD group your policy uses as a condition — or the policy checks 'User Groups' while the device does machine auth (computer object), or vice versa.",
+      "next_check": "Check the account named in this event against the policy's group condition — and confirm the object type matches (user vs computer). Nested-group and cross-domain memberships are frequent traps."
+    },
+    {
+      "cause": "A condition like NAS Port Type doesn't match what the NAS sends — e.g. policy requires 'Wireless - IEEE 802.11' but the controller sends 'Ethernet'.",
+      "next_check": "Compare the NAS Port Type / other RADIUS attributes in this event with each condition of the policy you expected to match."
+    },
+    {
+      "cause": "Policy ordering: a broader policy above the intended one grabs (and rejects) the request, or the intended policy is disabled.",
+      "next_check": "In the NPS console, review policy order top-to-bottom with this event's attributes in hand — the first match wins."
+    }
+  ],
+  "doc_slug": "nps-event-6273-reason-code-48"
+}

@@ -1,0 +1,49 @@
+Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Date:          7/3/2026 11:42:17 PM
+Event ID:      6273
+Task Category: Network Policy Server
+Level:         Information
+Keywords:      Audit Failure
+User:          N/A
+Computer:      NPS01.corp.example.com
+Description:
+Network Policy Server denied access to a user.
+
+Contact the Network Policy Server administrator for more information.
+
+User:
+	Security ID:			CORP\jsmith
+	Account Name:			jsmith
+	Account Domain:			CORP
+	Fully Qualified Account Name:	corp.example.com/Users/John Smith
+
+Client Machine:
+	Security ID:			NULL SID
+	Account Name:			-
+	Fully Qualified Account Name:	-
+	Called Station Identifier:		AA-BB-CC-DD-EE-FF:CorpWiFi
+	Calling Station Identifier:		11-22-33-44-55-66
+
+NAS:
+	NAS IPv4 Address:		10.20.0.12
+	NAS IPv6 Address:		-
+	NAS Identifier:			wlc-01
+	NAS Port-Type:			Wireless - IEEE 802.11
+	NAS Port:			1
+
+RADIUS Client:
+	Client Friendly Name:		WLC-Floor1
+	Client IP Address:			10.20.0.12
+
+Authentication Details:
+	Connection Request Policy Name:	Secure Wireless Connections
+	Network Policy Name:		Corp WiFi Access
+	Authentication Provider:		Windows
+	Authentication Server:		NPS01.corp.example.com
+	Authentication Type:		PEAP
+	EAP Type:			Microsoft: Secured password (EAP-MSCHAP v2)
+	Account Session Identifier:		-
+	Logging Results:			Accounting information was written to the local log file.
+	Reason Code:			16
+	Reason:				Authentication failed due to a user credentials mismatch. Either the user name provided does not map to an existing user account or the password was incorrect.

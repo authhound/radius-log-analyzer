@@ -1,0 +1,28 @@
+{
+  "id": "nps/reason-code-66",
+  "format": "nps",
+  "failure_stage": "inner_auth",
+  "title": "Reason Code 66 — authentication method not enabled on the matched policy",
+  "plain_english": "A network policy matched, but the client tried to authenticate with a method that policy doesn't allow. Client and server each did their job — they just don't agree on HOW to authenticate. The event's 'Authentication Type' and 'EAP Type' fields versus the policy's constraints tell the whole story.",
+  "match": {
+    "any": [
+      "Reason Code:\\s*66\\b",
+      "authentication method that is not enabled on the matching network policy"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "EAP method mismatch — the device requests PEAP-MSCHAPv2 while the policy only lists EAP-TLS (typical mid-migration), or vice versa.",
+      "next_check": "Compare this event's 'EAP Type' with the EAP types in the policy's Constraints → Authentication Methods; add the method or fix the client profile."
+    },
+    {
+      "cause": "The client fell back to a non-EAP method (PAP/CHAP/MS-CHAPv2 without EAP) that is unchecked in the policy — common with wired 802.1X fallbacks and VPN profiles.",
+      "next_check": "Look at 'Authentication Type' in the event: if it isn't EAP, decide deliberately whether to enable that method (weakens security) or fix the client."
+    },
+    {
+      "cause": "The request matched a DIFFERENT policy than you intended, one with stricter methods.",
+      "next_check": "Check 'Network Policy Name' in this event — if it's not the policy you expected, fix conditions/ordering rather than adding methods to the wrong policy."
+    }
+  ]
+}

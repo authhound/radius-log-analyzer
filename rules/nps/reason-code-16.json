@@ -1,0 +1,29 @@
+{
+  "id": "nps/reason-code-16",
+  "format": "nps",
+  "failure_stage": "inner_auth",
+  "title": "Reason Code 16 — credential mismatch (it's not always the password)",
+  "plain_english": "NPS matched your policies and got as far as checking the credentials — and the check failed. Either the account name didn't resolve to an account, or the password proof was wrong. This is the single most common NPS reject, and in practice a large share of them are NOT a mistyped password: look at WHICH identity the device actually sent before resetting anything.",
+  "match": {
+    "any": [
+      "Reason Code:\\s*16\\b",
+      "credentials mismatch"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "A stale saved password on the device — especially after an AD password change, Windows and phones keep sending the cached Wi-Fi credential.",
+      "next_check": "On the failing device, forget/delete the Wi-Fi network and reconnect entering the current credentials."
+    },
+    {
+      "cause": "Machine vs user authentication mismatch: the User Name field shows 'host/COMPUTER-NAME' (computer auth) while your policy or account expectations assume a user — or the other way round.",
+      "next_check": "Read the 'User Name' / 'Account Name' fields in this very event: a 'host/' prefix means machine authentication. Align the Wi-Fi profile's authentication mode ('user', 'computer', or 'user or computer') with what your network policy expects."
+    },
+    {
+      "cause": "NTLM hardening broke PEAP-MSCHAPv2: validating the MSCHAPv2 proof needs the NT hash path, and policies disabling NTLM (or Credential Guard on newer Windows) can break it domain-wide.",
+      "next_check": "Check the domain controller's NTLM audit / 4625 events at the same timestamps; if hardening is the cause, the strategic fix is moving to EAP-TLS rather than re-enabling NTLM."
+    }
+  ],
+  "doc_slug": "nps-event-6273-reason-code-16"
+}

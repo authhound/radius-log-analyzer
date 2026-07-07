@@ -1,0 +1,28 @@
+{
+  "id": "freeradius/unknown-client",
+  "format": "freeradius",
+  "failure_stage": "client_config",
+  "title": "Request from unknown client — no clients.conf entry for this NAS",
+  "plain_english": "The packet reached the server, but no client{} entry in clients.conf covers its source IP, so FreeRADIUS silently ignored it. The NAS sees this as a timeout, not a reject — which is why the client device just spins and eventually gives up.",
+  "match": {
+    "any": [
+      "from unknown client",
+      "Ignoring request to auth"
+    ]
+  },
+  "priority": 95,
+  "causes": [
+    {
+      "cause": "There is simply no client entry for this NAS yet (new AP/switch, or its IP changed).",
+      "next_check": "Add a client{} block in clients.conf with the exact source IP shown in the debug output, set the shared secret, and restart or HUP radiusd."
+    },
+    {
+      "cause": "The NAS is multi-homed or behind NAT and sends RADIUS from a different interface/IP than the one you whitelisted.",
+      "next_check": "Compare the source IP in the debug line with what you configured; on the NAS, look for a 'RADIUS source interface' setting and pin it."
+    },
+    {
+      "cause": "The client entry exists but the config was never reloaded, or it sits in a virtual server that isn't listening on this address.",
+      "next_check": "Restart radiusd (or send SIGHUP) and verify with radiusd -X that the client list printed at startup includes this IP."
+    }
+  ]
+}

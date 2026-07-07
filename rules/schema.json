@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/utarafdar/radius-log-analyzer/rules/schema.json",
+  "title": "Diagnosis rule",
+  "description": "One diagnosable failure signature. Regexes must stay within the RE2/JavaScript common subset (no lookbehind, no lookahead, no backreferences) because they are evaluated by both the Go CLI and the browser parser. All patterns are matched case-insensitively against individual log lines.",
+  "type": "object",
+  "required": ["id", "format", "failure_stage", "title", "plain_english", "match", "priority", "causes"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(freeradius|nps)/[a-z0-9-]+$",
+      "description": "Unique id, '<format>/<slug>'. The file must live in rules/<format>/<slug>.json."
+    },
+    "format": { "enum": ["freeradius", "nps"] },
+    "failure_stage": {
+      "enum": [
+        "client_hello",
+        "cert_validation",
+        "inner_auth",
+        "timeout",
+        "shared_secret",
+        "eap_fragmentation",
+        "policy_match",
+        "client_config",
+        "user_account"
+      ]
+    },
+    "title": { "type": "string", "maxLength": 90 },
+    "plain_english": {
+      "type": "string",
+      "description": "What actually happened, written for a tired admin, not a protocol lawyer."
+    },
+    "match": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "any": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Rule matches if at least one of these regexes matches at least one line (and all 'all' patterns match)."
+        },
+        "all": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Every one of these regexes must match at least one line."
+        }
+      }
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Higher = more specific/confident. When several rules match, matches are ordered by priority desc, then id asc. 100 = exact signature, 50 = generic pattern, 10 = catch-all."
+    },
+    "causes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "description": "Likely causes, most likely first.",
+      "items": {
+        "type": "object",
+        "required": ["cause", "next_check"],
+        "additionalProperties": false,
+        "properties": {
+          "cause": { "type": "string" },
+          "next_check": { "type": "string", "description": "One concrete action to confirm or eliminate this cause." }
+        }
+      }
+    },
+    "doc_slug": {
+      "type": "string",
+      "description": "Optional slug of the companion knowledge-base page (web/src/content/kb/<slug>.md)."
+    }
+  }
+}
