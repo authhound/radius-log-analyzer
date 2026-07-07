@@ -19,5 +19,6 @@
       "cause": "An explicit reject in your policy (unlang) — e.g. a group check or NAS filter.",
       "next_check": "Search the debug output for 'reject' inside the policy sections (post-auth, authorize) to see which condition fired."
     }
-  ]
+  ],
+  "doc_slug": "freeradius-login-incorrect"
 }

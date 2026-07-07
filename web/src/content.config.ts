@@ -6,7 +6,7 @@ const kb = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    format: z.enum(['freeradius', 'nps']),
+    format: z.enum(['freeradius', 'nps', 'general']),
     signature: z.string(),
     rule_id: z.string().optional(),
   }),

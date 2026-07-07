@@ -26,5 +26,6 @@
       "cause": "No common cipher suite between the client and the server's OpenSSL policy.",
       "next_check": "Look a few lines above the failure in radiusd -X for the ClientHello details, and review cipher_list in the eap TLS configuration."
     }
-  ]
+  ],
+  "doc_slug": "freeradius-tls-version-mismatch"
 }
