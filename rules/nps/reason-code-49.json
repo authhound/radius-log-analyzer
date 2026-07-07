@@ -24,5 +24,6 @@
       "cause": "The request was meant to be forwarded to another RADIUS server (proxy scenario) and the forwarding CRP doesn't cover it.",
       "next_check": "If you proxy by realm, check the User Name's realm/suffix in this event against the CRP's realm-matching rules."
     }
-  ]
+  ],
+  "doc_slug": "nps-event-6273-reason-code-49"
 }

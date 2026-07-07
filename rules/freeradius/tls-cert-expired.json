@@ -26,5 +26,6 @@
       "cause": "A wrong clock makes a valid certificate look expired (device that sat in a drawer, VM with broken NTP).",
       "next_check": "Verify the date and time on the failing device and on the RADIUS server before reissuing anything."
     }
-  ]
+  ],
+  "doc_slug": "freeradius-certificate-expired"
 }

@@ -24,5 +24,6 @@
       "cause": "Revocation checking fails — NPS can't reach the CRL/OCSP endpoint for its certificate chain.",
       "next_check": "Check the CAPI2 operational event log on the NPS server and test CRL URL reachability from that box."
     }
-  ]
+  ],
+  "doc_slug": "nps-event-6273-reason-code-23"
 }

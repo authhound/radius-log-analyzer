@@ -24,5 +24,6 @@
       "cause": "The supplicant silently gave up — for example it is waiting on a user prompt (certificate trust dialog) that nobody clicked.",
       "next_check": "Watch a failing client's own supplicant logs while the retransmissions happen; on Windows check the WLAN-AutoConfig event log."
     }
-  ]
+  ],
+  "doc_slug": "freeradius-eap-fragmentation-timeouts"
 }

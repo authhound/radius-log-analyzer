@@ -24,5 +24,6 @@
       "cause": "The account lives in a different domain/forest and the trust path or the NPS server's search scope doesn't reach it.",
       "next_check": "Verify the domain prefix in the event and confirm the trust between that domain and the NPS server's domain."
     }
-  ]
+  ],
+  "doc_slug": "nps-event-6273-reason-code-8"
 }

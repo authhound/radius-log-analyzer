@@ -24,5 +24,6 @@
       "cause": "The client entry exists but the config was never reloaded, or it sits in a virtual server that isn't listening on this address.",
       "next_check": "Restart radiusd (or send SIGHUP) and verify with radiusd -X that the client list printed at startup includes this IP."
     }
-  ]
+  ],
+  "doc_slug": "freeradius-unknown-client"
 }

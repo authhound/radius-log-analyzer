@@ -24,5 +24,6 @@
       "cause": "The EAP configuration blob in the policy is corrupted — a known aftermath of certificate renewals and NPS config imports.",
       "next_check": "In the policy's PEAP settings, remove and re-add the EAP type, reselect the server certificate, and save."
     }
-  ]
+  ],
+  "doc_slug": "nps-event-6273-reason-code-22"
 }

@@ -24,5 +24,6 @@
       "cause": "The request matched a DIFFERENT policy than you intended, one with stricter methods.",
       "next_check": "Check 'Network Policy Name' in this event — if it's not the policy you expected, fix conditions/ordering rather than adding methods to the wrong policy."
     }
-  ]
+  ],
+  "doc_slug": "nps-event-6273-reason-code-66"
 }

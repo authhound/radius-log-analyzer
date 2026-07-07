@@ -25,5 +25,6 @@
       "cause": "You want NPS policies to be authoritative but the policy still honours per-account settings.",
       "next_check": "In the matched network policy's properties, enable 'Ignore user account dial-in properties' so the policy decides, not the account flag."
     }
-  ]
+  ],
+  "doc_slug": "nps-event-6273-reason-code-65"
 }
