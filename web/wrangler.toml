@@ -5,7 +5,7 @@
 #   2. wrangler d1 execute radius-tools --file=schema.sql --remote
 #   3. wrangler pages deploy                  (or connect the repo in the dashboard)
 
-name = "radius-log-analyser"
+name = "radius-log-analyzer"
 compatibility_date = "2026-01-01"
 pages_build_output_dir = "dist"
 

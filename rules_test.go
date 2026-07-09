@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	analyzer "github.com/authhound/radius-log-analyser"
-	"github.com/authhound/radius-log-analyser/internal/diagnose"
+	analyzer "github.com/authhound/radius-log-analyzer"
+	"github.com/authhound/radius-log-analyzer/internal/diagnose"
 )
 
 // TestRulesWellFormed validates every shipped rule: parses, regexes compile

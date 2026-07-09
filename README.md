@@ -6,11 +6,11 @@ Paste FreeRADIUS debug output (`radiusd -X`) or a Windows NPS event log entry �
 2. **Top 3 likely causes**, ranked by real-world frequency.
 3. **One concrete next check** for each cause.
 
-Use it in the browser at **[the web analyser](https://authhound.com/analyzer)** or offline via the CLI.
+Use it in the browser at **[the web analyzer](https://authhound.com/analyzer)** or offline via the CLI.
 
 ## Privacy: your log never leaves your machine
 
-The web analyser parses **entirely in your browser** — open DevTools → Network and watch nothing get sent while you analyze. The CLI is fully offline. This repo is the proof: the browser engine ([web/src/lib/parser](web/src/lib/parser)) and the CLI run the **same rule files** ([rules/](rules/)), and a shared fixture corpus ([testdata/](testdata/)) pins both implementations to identical behaviour in CI.
+The web analyzer parses **entirely in your browser** — open DevTools → Network and watch nothing get sent while you analyze. The CLI is fully offline. This repo is the proof: the browser engine ([web/src/lib/parser](web/src/lib/parser)) and the CLI run the **same rule files** ([rules/](rules/)), and a shared fixture corpus ([testdata/](testdata/)) pins both implementations to identical behaviour in CI.
 
 ## CLI
 
@@ -23,7 +23,7 @@ $ radius-analyze -json debug.log | jq .matches[0].rule_id
 Install: grab a binary from [Releases](../../releases), or:
 
 ```console
-$ go install github.com/authhound/radius-log-analyser/cmd/radius-analyze@latest
+$ go install github.com/authhound/radius-log-analyzer/cmd/radius-analyze@latest
 ```
 
 Example output:
@@ -76,7 +76,7 @@ rules/        Shared diagnosis rules (JSON) — the single source of truth
 testdata/     Shared fixtures: sample log -> expected diagnosis, run by BOTH engines
 cmd/          Go CLI (radius-analyze)
 internal/     Go parser + rules engine
-web/          Astro site: in-browser analyser + error library (Cloudflare Pages)
+web/          Astro site: in-browser analyzer + error library (Cloudflare Pages)
 ```
 
 ## Development
@@ -86,7 +86,7 @@ web/          Astro site: in-browser analyser + error library (Cloudflare Pages)
 $ go test ./...
 $ go run ./cmd/radius-analyze testdata/freeradius/mschap-fail.log
 
-# Web (analyser at http://localhost:4321/analyzer)
+# Web (analyzer at http://localhost:4321/analyzer)
 $ cd web && npm install
 $ npm test        # TS engine vs the same fixtures
 $ npm run dev

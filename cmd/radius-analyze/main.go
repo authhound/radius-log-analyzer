@@ -16,9 +16,9 @@ import (
 	"io"
 	"os"
 
-	analyzer "github.com/authhound/radius-log-analyser"
-	"github.com/authhound/radius-log-analyser/internal/diagnose"
-	"github.com/authhound/radius-log-analyser/internal/parse"
+	analyzer "github.com/authhound/radius-log-analyzer"
+	"github.com/authhound/radius-log-analyzer/internal/diagnose"
+	"github.com/authhound/radius-log-analyzer/internal/parse"
 )
 
 func main() {
