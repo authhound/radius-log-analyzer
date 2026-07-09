@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   // Update once a custom domain is attached in Cloudflare Pages.
-  site: 'https://radius-log-analyzer.pages.dev',
+  site: 'https://radius-log-analyser.pages.dev',
   output: 'static',
   vite: {
     server: {

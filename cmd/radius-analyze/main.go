@@ -16,9 +16,9 @@ import (
 	"io"
 	"os"
 
-	analyzer "github.com/utarafdar/radius-log-analyzer"
-	"github.com/utarafdar/radius-log-analyzer/internal/diagnose"
-	"github.com/utarafdar/radius-log-analyzer/internal/parse"
+	analyzer "github.com/utarafdar/radius-log-analyser"
+	"github.com/utarafdar/radius-log-analyser/internal/diagnose"
+	"github.com/utarafdar/radius-log-analyser/internal/parse"
 )
 
 func main() {

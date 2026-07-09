@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	analyzer "github.com/utarafdar/radius-log-analyzer"
-	"github.com/utarafdar/radius-log-analyzer/internal/diagnose"
+	analyzer "github.com/utarafdar/radius-log-analyser"
+	"github.com/utarafdar/radius-log-analyser/internal/diagnose"
 )
 
 type expected struct {
