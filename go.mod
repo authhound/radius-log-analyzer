@@ -1,3 +1,3 @@
-module github.com/utarafdar/radius-log-analyser
+module github.com/authhound/radius-log-analyser
 
 go 1.23

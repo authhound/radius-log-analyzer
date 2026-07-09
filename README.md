@@ -23,7 +23,7 @@ $ radius-analyze -json debug.log | jq .matches[0].rule_id
 Install: grab a binary from [Releases](../../releases), or:
 
 ```console
-$ go install github.com/utarafdar/radius-log-analyser/cmd/radius-analyze@latest
+$ go install github.com/authhound/radius-log-analyser/cmd/radius-analyze@latest
 ```
 
 Example output:

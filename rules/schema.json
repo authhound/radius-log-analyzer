@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/utarafdar/radius-log-analyser/rules/schema.json",
+  "$id": "https://github.com/authhound/radius-log-analyser/rules/schema.json",
   "title": "Diagnosis rule",
   "description": "One diagnosable failure signature. Regexes must stay within the RE2/JavaScript common subset (no lookbehind, no lookahead, no backreferences) because they are evaluated by both the Go CLI and the browser parser. All patterns are matched case-insensitively against individual log lines.",
   "type": "object",

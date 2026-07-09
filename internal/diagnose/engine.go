@@ -11,8 +11,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/utarafdar/radius-log-analyser/internal/parse"
-	"github.com/utarafdar/radius-log-analyser/internal/rule"
+	"github.com/authhound/radius-log-analyser/internal/parse"
+	"github.com/authhound/radius-log-analyser/internal/rule"
 )
 
 const maxEvidenceLines = 3
