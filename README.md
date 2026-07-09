@@ -6,7 +6,7 @@ Paste FreeRADIUS debug output (`radiusd -X`) or a Windows NPS event log entry â€
 2. **Top 3 likely causes**, ranked by real-world frequency.
 3. **One concrete next check** for each cause.
 
-Use it in the browser at **[the web analyser](https://radius-log-analyser.pages.dev/analyzer)** or offline via the CLI.
+Use it in the browser at **[the web analyser](https://authhound.com/analyzer)** or offline via the CLI.
 
 ## Privacy: your log never leaves your machine
 

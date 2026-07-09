@@ -2,8 +2,8 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  // Update once a custom domain is attached in Cloudflare Pages.
-  site: 'https://radius-log-analyser.pages.dev',
+  // Custom domain; attach it to the Pages project on first deploy.
+  site: 'https://authhound.com',
   output: 'static',
   vite: {
     server: {
