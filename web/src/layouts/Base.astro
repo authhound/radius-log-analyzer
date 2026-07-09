@@ -13,9 +13,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Cloudflare Web Analytics -->
-    <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0c7625c3fd5f48a483276608c796d0c5"}'></script>
-    <!-- End Cloudflare Web Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
@@ -28,6 +25,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>"
     />
+    <!-- Cloudflare Web Analytics -->
+    <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0c7625c3fd5f48a483276608c796d0c5"}'></script>
     <!-- Cloudflare Web Analytics: paste the beacon snippet here after creating
          the site in the Cloudflare dashboard (Analytics & Logs -> Web Analytics). -->
   </head>
