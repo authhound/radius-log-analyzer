@@ -11,27 +11,29 @@ const kbPages = (await getCollection('kb')).sort((a, b) =>
   title="RADIUS Log Analyzer — decode FreeRADIUS debug output & NPS reason codes"
   description="Paste FreeRADIUS radiusd -X output or a Windows NPS event 6273 and get a plain-English diagnosis: what failed, the top 3 likely causes, and the exact next check for each. Free, open source, runs entirely in your browser."
 >
-  <h1>Your RADIUS reject, explained in plain English</h1>
-  <p class="lede">
-    Paste <code>radiusd -X</code> debug output or a Windows NPS event and get
-    back what actually failed — the failure stage, the three most likely
-    causes ranked, and one concrete next check for each. No account, no
-    upload, no waiting.
-  </p>
+  <div class="hero">
+    <h1>Your RADIUS reject, explained in plain English</h1>
+    <p class="lede">
+      Paste <code>radiusd -X</code> debug output or a Windows NPS event and get
+      back what actually failed — the failure stage, the three most likely
+      causes ranked, and one concrete next check for each. No account, no
+      upload, no waiting.
+    </p>
 
-  <p style="margin-top:1.5rem">
-    <a class="btn" href="/analyzer">Analyze a log now</a>
-    <a class="btn secondary" href="/kb" style="margin-left:0.6rem">Browse common errors</a>
-  </p>
+    <div class="actions">
+      <a class="btn" href="/analyzer">Analyze a log now</a>
+      <a class="btn secondary" href="/kb">Browse common errors</a>
+    </div>
 
-  <div class="privacy-note">
-    <span>🔒</span>
-    <span>
-      <strong>Your log never leaves your machine.</strong> Parsing runs
-      entirely in your browser — check the network tab, or
-      <a href="https://github.com/authhound/radius-log-analyzer">read the source</a>.
-      There's an offline CLI too.
-    </span>
+    <div class="privacy-note">
+      <span>🔒</span>
+      <span>
+        <strong>Your log never leaves your machine.</strong> Parsing runs
+        entirely in your browser — check the network tab, or
+        <a href="https://github.com/authhound/radius-log-analyzer">read the source</a>.
+        There's an offline CLI too.
+      </span>
+    </div>
   </div>
 
   <h2>How it works</h2>

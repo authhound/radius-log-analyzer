@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Logo from '../components/Logo.astro';
 
 interface Props {
   title: string;
@@ -21,19 +22,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>"
-    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <!-- Cloudflare Web Analytics -->
     <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0c7625c3fd5f48a483276608c796d0c5"}'></script>
-    <!-- Cloudflare Web Analytics: paste the beacon snippet here after creating
-         the site in the Cloudflare dashboard (Analytics & Logs -> Web Analytics). -->
   </head>
   <body>
     <header class="site">
       <div class="container">
-        <a class="brand" href="/">RADIUS Log Analyzer</a>
+        <a class="brand" href="/">
+          <Logo size={30} />
+          AuthHound
+        </a>
         <nav>
           <a href="/analyzer">Analyzer</a>
           <a href="/kb">Error library</a>
@@ -53,6 +52,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           machine. <a href="https://github.com/authhound/radius-log-analyzer">Verify in the source</a>.
         </span>
         <span>
+          AuthHound ·
           <a href="https://github.com/authhound/radius-log-analyzer">Open source</a> ·
           CLI available
         </span>
