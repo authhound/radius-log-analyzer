@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { analyze } from '../src/lib/parser';
+import { analyze } from './index';
 
 // Runs the TS engine over the same fixture corpus as the Go tests
 // (parity_test.go) — together they pin both implementations to identical
 // behaviour.
-const testdataDir = join(__dirname, '..', '..', 'testdata');
+const testdataDir = join(__dirname, '..', 'testdata');
 
 interface Expected {
   format: string;

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://authhound.com/sitemap-index.xml

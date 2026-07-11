@@ -2,11 +2,8 @@
 /radius-analyze
 /dist/
 
-# Web
-web/node_modules/
-web/dist/
-web/.astro/
-web/.wrangler/
+# Node
+node_modules/
 
 # Misc
 *.log.bak

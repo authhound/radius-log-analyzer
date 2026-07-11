@@ -1,4 +1,4 @@
-# RADIUS Log Analyser
+# RADIUS Log Analyzer
 
 Paste FreeRADIUS debug output (`radiusd -X`) or a Windows NPS event log entry — get back a plain-English diagnosis:
 
@@ -10,7 +10,7 @@ Use it in the browser at **[the web analyzer](https://authhound.com/analyzer)** 
 
 ## Privacy: your log never leaves your machine
 
-The web analyzer parses **entirely in your browser** — open DevTools → Network and watch nothing get sent while you analyze. The CLI is fully offline. This repo is the proof: the browser engine ([web/src/lib/parser](web/src/lib/parser)) and the CLI run the **same rule files** ([rules/](rules/)), and a shared fixture corpus ([testdata/](testdata/)) pins both implementations to identical behaviour in CI.
+The web analyzer parses **entirely in your browser** — open DevTools → Network and watch nothing get sent while you analyze. The CLI is fully offline. This repo is the proof: the browser engine ([parser/](parser/)) and the CLI run the **same rule files** ([rules/](rules/)), and a shared fixture corpus ([testdata/](testdata/)) pins both implementations to identical behaviour in CI. The website at [authhound.com](https://authhound.com) consumes this repo unmodified — the parser running in your browser is the code you're looking at.
 
 ## CLI
 
@@ -67,7 +67,7 @@ Every failure signature is a small JSON rule in [rules/](rules/) (schema: [rules
 
 The rules encode years of vendor-side RADIUS ticket pattern-matching. Both engines (Go and TypeScript) load the same files, match them line-by-line, and rank results by specificity.
 
-**Contributing a rule** is the most valuable contribution possible: add the JSON rule, a redacted sample log in `testdata/`, and its `.expected.json`. `go test ./...` and `cd web && npm test` must both pass — that's the whole review bar for parity.
+**Contributing a rule** is the most valuable contribution possible: add the JSON rule, a redacted sample log in `testdata/`, and its `.expected.json`. `go test ./...` and `cd parser && npm test` must both pass — that's the whole review bar for parity.
 
 ## Repository layout
 
@@ -76,8 +76,10 @@ rules/        Shared diagnosis rules (JSON) — the single source of truth
 testdata/     Shared fixtures: sample log -> expected diagnosis, run by BOTH engines
 cmd/          Go CLI (radius-analyze)
 internal/     Go parser + rules engine
-web/          Astro site: in-browser analyzer + error library (Cloudflare Pages)
+parser/       TypeScript parser — the exact code the web analyzer runs in your browser
 ```
+
+The [authhound.com](https://authhound.com) website lives in a separate repo and pulls this one in as a submodule, so the deployed parser is always a pinned commit of this public code.
 
 ## Development
 
@@ -86,13 +88,10 @@ web/          Astro site: in-browser analyzer + error library (Cloudflare Pages)
 $ go test ./...
 $ go run ./cmd/radius-analyze testdata/freeradius/mschap-fail.log
 
-# Web (analyzer at http://localhost:4321/analyzer)
-$ cd web && npm install
-$ npm test        # TS engine vs the same fixtures
-$ npm run dev
+# TypeScript engine (same fixtures)
+$ cd parser && npm install
+$ npm test
 ```
-
-Web deployment (Cloudflare Pages + D1) is documented in [web/wrangler.toml](web/wrangler.toml).
 
 ## License
 
