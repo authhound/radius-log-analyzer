@@ -1,0 +1,12 @@
+(12) Received Access-Request Id 14 from 192.168.10.5:50000 to 192.168.10.2:1812 length 1100
+(12)   User-Name = "host/laptop-07.corp.example.com"
+(12) eap_tls: (TLS) eap - recv TLS 1.2 Handshake, Certificate
+(12) eap_tls: ERROR: (TLS) unable to get issuer certificate for issuer=/CN=Corp Issuing CA 2
+(12) eap_tls: (TLS) eap - send TLS 1.2 Alert, fatal unknown_ca
+(12) eap_tls: ERROR: (TLS) Alert write:fatal:unknown CA
+(12) eap_tls: ERROR: (TLS) Failed reading from OpenSSL: error:0A000086:SSL routines::certificate verify failed
+(12) eap_tls: ERROR: (TLS) System call (I/O) error (-1)
+(12) eap_tls: ERROR: (TLS) EAP Receive handshake failed during operation
+(12) eap_tls: ERROR: [eaptls process] = fail
+(12) eap: ERROR: Failed continuing EAP TLS (13) session.  EAP sub-module failed
+(12) Sent Access-Reject Id 14 from 192.168.10.2:1812 to 192.168.10.5:50000 length 44

@@ -1,0 +1,20 @@
+{
+  "id": "nps/reason-code-35",
+  "format": "nps",
+  "failure_stage": "user_account",
+  "title": "Reason Code 35: the account has expired",
+  "plain_english": "The account has an expiry date in Active Directory that has passed. Typical for contractors, interns and service accounts with a set end date. The password is not the problem.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)35\\b",
+      "specified in the RADIUS Access-Request message is expired"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The account's expiry date passed.",
+      "next_check": "Get-ADUser <name> -Properties AccountExpirationDate; extend it on the Account tab or re-provision the account through your normal process."
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "format": "freeradius",
+  "top": "freeradius/pap-password-mismatch",
+  "matched": [
+    "freeradius/pap-password-mismatch",
+    "freeradius/login-incorrect-generic"
+  ]
+}

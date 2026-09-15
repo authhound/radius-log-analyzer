@@ -9,7 +9,11 @@
       "SSL_read failed",
       "TLS session fails",
       "TLS_accept: Error in error",
-      "TLS receive handshake failed"
+      "TLS receive handshake failed",
+      "EAP Receive handshake failed during operation",
+      "Failed reading from OpenSSL",
+      "Server : Error in error",
+      "System call \\(I/O\\) error"
     ]
   },
   "priority": 50,

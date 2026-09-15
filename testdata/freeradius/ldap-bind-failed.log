@@ -1,0 +1,11 @@
+(3) Received Access-Request Id 4 from 192.168.10.5:50000 to 192.168.10.2:1812 length 75
+(3)   User-Name = "bob"
+rlm_ldap (ldap): Reserved connection (1)
+(3) ldap: EXPAND (uid=%{%{Stripped-User-Name}:-%{User-Name}})
+(3) ldap:    --> (uid=bob)
+rlm_ldap (ldap): Bind credentials incorrect: Invalid credentials
+rlm_ldap (ldap): Bind with cn=radius,ou=services,dc=example,dc=org to ldaps://ldap.example.org:636 failed: Invalid credentials
+rlm_ldap (ldap): Closing connection (1): Hit reconnection limit
+(3)     [ldap] = fail
+(3) ERROR: No Auth-Type found: rejecting the user via Post-Auth-Type = Reject
+(3) Sent Access-Reject Id 4 from 192.168.10.2:1812 to 192.168.10.5:50000 length 20

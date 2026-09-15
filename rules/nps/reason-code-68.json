@@ -1,0 +1,20 @@
+{
+  "id": "nps/reason-code-68",
+  "format": "nps",
+  "failure_stage": "policy_match",
+  "title": "Reason Code 68: outside the policy's day and time restrictions",
+  "plain_english": "The request matched a network policy that has a Day and Time Restrictions constraint, and the current time is outside the allowed window. The account and credentials are fine.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)68\\b",
+      "does not have permission to access the network on this day at this time"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The matching network policy restricts days and times.",
+      "next_check": "NPS console > Network Policies > the policy named in the event > Constraints > Day and Time Restrictions; check the NPS server's time zone too."
+    }
+  ]
+}

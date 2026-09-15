@@ -6,7 +6,7 @@
   "plain_english": "NPS matched your policies and got as far as checking the credentials — and the check failed. Either the account name didn't resolve to an account, or the password proof was wrong. This is the single most common NPS reject, and in practice a large share of them are NOT a mistyped password: look at WHICH identity the device actually sent before resetting anything.",
   "match": {
     "any": [
-      "Reason Code:\\s*16\\b",
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)16\\b",
       "credentials mismatch"
     ]
   },

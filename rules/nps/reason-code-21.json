@@ -1,0 +1,28 @@
+{
+  "id": "nps/reason-code-21",
+  "format": "nps",
+  "failure_stage": "policy_match",
+  "title": "Reason Code 21: an NPS extension rejected the request (often the Azure MFA extension)",
+  "plain_english": "NPS itself would have allowed the connection; an extension DLL registered on this server said no. On almost every modern NPS box that extension is the Azure MFA NPS Extension, so this usually means the MFA step failed: the user is not enrolled, denied or ignored the prompt, or the extension could not reach Entra ID in time.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)21\\b",
+      "extension dynamic link library.*rejected"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The MFA challenge failed or timed out: user not registered for MFA, no default method, or the push was declined.",
+      "next_check": "On the NPS server open Event Viewer > Applications and Services Logs > Microsoft > AzureMfa > AuthZ and find the entry for this user at the same time; it names the exact MFA outcome."
+    },
+    {
+      "cause": "The extension cannot reach Entra ID: expired extension certificate, proxy/firewall, or a tenant configuration change.",
+      "next_check": "Run the extension's health script (MFA_NPS_Troubleshooter.ps1) and check the certificate under the AzureMfa registry key has not expired."
+    },
+    {
+      "cause": "The NAS gives up before the MFA push is answered, so the extension's reject races the user.",
+      "next_check": "Raise the RADIUS timeout on the NAS/VPN to 60 seconds or more with a single retry, so a phone prompt has time to be answered."
+    }
+  ]
+}

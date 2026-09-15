@@ -1,0 +1,8 @@
+{
+  "format": "freeradius",
+  "top": "freeradius/tls-client-cert-rejected",
+  "matched": [
+    "freeradius/tls-client-cert-rejected",
+    "freeradius/tls-handshake-failed"
+  ]
+}

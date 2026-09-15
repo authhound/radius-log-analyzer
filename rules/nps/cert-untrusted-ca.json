@@ -1,0 +1,30 @@
+{
+  "id": "nps/cert-untrusted-ca",
+  "format": "nps",
+  "failure_stage": "cert_validation",
+  "title": "Reason Code 265/286/287/295: the client certificate chains to a CA NPS does not trust",
+  "plain_english": "EAP-TLS: the device presented a certificate, and NPS could not build a chain from it to a CA it trusts. The device and its certificate may be perfectly valid; the NPS server's certificate store is what decides. This shows up after a CA migration, when devices enroll from a new CA (Intune, SCEP, a cloud PKI) that the NPS server never learned about.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)(265|286|287|295)\\b",
+      "chains to an enterprise root certification authority that is not trusted",
+      "issued by a certification authority \\(CA\\) that is not trusted",
+      "does not chain to an enterprise root CA that NPS trusts"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The issuing CA (root and intermediates) is missing from the NPS server's local machine certificate stores.",
+      "next_check": "On the NPS server open certlm.msc: the root must be in Trusted Root Certification Authorities and each intermediate in Intermediate Certification Authorities. Export the chain from a failing device's certificate to compare."
+    },
+    {
+      "cause": "Devices enrolled from a different CA than the one NPS was set up for (new PKI, cloud CA, Intune SCEP profile).",
+      "next_check": "On a failing device, open the client certificate and read its issuer chain; then check that exact chain exists on NPS."
+    },
+    {
+      "cause": "Code 265/287 specifically: the CA is trusted but is not an enterprise CA published in AD (NTAuth store).",
+      "next_check": "Run certutil -viewstore -enterprise NTAuth on the NPS server; publish the issuing CA with certutil -dspublish -f <ca.cer> NTAuthCA if it is missing."
+    }
+  ]
+}

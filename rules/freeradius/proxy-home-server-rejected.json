@@ -1,0 +1,23 @@
+{
+  "id": "freeradius/proxy-home-server-rejected",
+  "format": "freeradius",
+  "failure_stage": "proxy",
+  "title": "Proxy: the home server rejected the user",
+  "plain_english": "The request was forwarded to a home server for this realm, and that server answered Access-Reject. This server only relayed the answer, so its own log cannot tell you why. The reason is in the home server's log at the same timestamp.",
+  "match": {
+    "any": [
+      "Home Server says so"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The home server has its own reason: wrong password, unknown user, policy. It is logged there, not here.",
+      "next_check": "Find the same request on the home server (radiusd -X output, or NPS event 6273 with the same account and time) and paste that here."
+    },
+    {
+      "cause": "Realm stripping changed the identity: the home server received a user name it does not recognize (with or without the @realm part).",
+      "next_check": "Check 'strip' on the realm in proxy.conf and compare the User-Name in the proxied Access-Request with what the home server expects."
+    }
+  ]
+}

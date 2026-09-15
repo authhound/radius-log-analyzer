@@ -1,0 +1,27 @@
+{
+  "id": "freeradius/radclient-no-reply",
+  "format": "freeradius",
+  "failure_stage": "timeout",
+  "title": "radtest/radclient: no reply from the server",
+  "plain_english": "radtest or radclient sent the request and heard nothing back. A RADIUS server that does not know the client or does not agree on the shared secret drops the packet silently, on purpose, so 'no reply' is what both of those look like from the client side. A firewall or a server that is not listening looks identical.",
+  "match": {
+    "any": [
+      "No reply from server for ID"
+    ]
+  },
+  "priority": 90,
+  "causes": [
+    {
+      "cause": "The source IP is not defined as a client on the server, so the server ignores the packet.",
+      "next_check": "On the server, radiusd -X shows 'Ignoring request to auth ... from unknown client <ip>' if this is it; add the client's real source IP (after NAT, if any) to clients.conf and restart."
+    },
+    {
+      "cause": "The shared secret differs between radtest and the server, so the Message-Authenticator check fails and the packet is dropped.",
+      "next_check": "On the server, radiusd -X shows 'invalid Message-Authenticator! (Shared secret is incorrect.)'; re-enter the secret on both sides and watch for trailing spaces or quotes."
+    },
+    {
+      "cause": "The packet never arrived: wrong host or port, a firewall between the two, or the server is not listening on that address.",
+      "next_check": "On the server run 'ss -ulnp | grep 1812' and check the listen address; from the client test reachability with authhound-probe or tcpdump on the server for udp port 1812."
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "format": "nps",
+  "top": "nps/domain-unreachable",
+  "matched": [
+    "nps/domain-unreachable",
+    "nps/event-6273-denied-generic"
+  ]
+}

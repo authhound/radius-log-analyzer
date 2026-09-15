@@ -1,0 +1,11 @@
+(9) Received Access-Request Id 13 from 192.168.10.5:50000 to 192.168.10.2:1812 length 75
+(9)   User-Name = "bob@corp.example.com"
+(9) suffix: Looking up realm "corp.example.com" for User-Name = "bob@corp.example.com"
+(9) suffix: Found realm "corp.example.com"
+(9) Proxying request to home server 192.168.20.5 port 1812 timeout 30.000000
+(9) Sent Access-Request Id 200 from 0.0.0.0:35000 to 192.168.20.5:1812 length 100
+Waking up in 0.3 seconds.
+(9) ERROR: Failing proxied request, due to lack of any response from home server 192.168.20.5 port 1812
+Marking home server 192.168.20.5 port 1812 as zombie (it has not responded in 20.000000 seconds).
+(9) Login incorrect (Home Server failed to respond): [bob@corp.example.com] (from client office-switch port 0)
+(9) Sent Access-Reject Id 13 from 192.168.10.2:1812 to 192.168.10.5:50000 length 20

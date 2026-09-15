@@ -6,7 +6,8 @@
   "plain_english": "Network Policy Server denied this connection attempt. The decisive detail is the 'Reason Code' line of the event — if a more specific diagnosis appears above this one, that's your answer. If this generic result is all you got, the pasted text is probably missing the Reason Code / Reason lines.",
   "match": {
     "any": [
-      "Network Policy Server denied access to a user"
+      "Network Policy Server denied access to a user",
+      "<EventID>6273</EventID>"
     ]
   },
   "priority": 5,

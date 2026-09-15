@@ -1,0 +1,28 @@
+{
+  "id": "nps/log-file-format",
+  "format": "nps",
+  "failure_stage": "unsupported_input",
+  "title": "This is an NPS accounting log line, not an event",
+  "plain_english": "This looks like a line from NPS's accounting log files (C:\\Windows\\System32\\LogFiles, in IAS or DTS format) rather than an Event Viewer entry. Those files carry the same reason codes, but as bare numbers in positional columns or XML elements, and they omit the human-readable Reason text. The Security event log (events 6272/6273/6274) is a far better starting point for a failed logon.",
+  "match": {
+    "any": [
+      "\",\"IAS\",",
+      "<Packet-Type data_type="
+    ]
+  },
+  "priority": 5,
+  "causes": [
+    {
+      "cause": "You have the log file but need the diagnosis.",
+      "next_check": "Open Event Viewer > Windows Logs > Security, filter on event 6273 (denied) or 6274 (discarded) around the same time, right-click the event > 'Copy details as text', and paste that here."
+    },
+    {
+      "cause": "IAS format: the fields are positional. Packet-Type is the 5th field (3 = Access-Reject) and Reason-Code is further along the same line (the 26th field in the default IAS layout).",
+      "next_check": "Take that number and paste a single line 'Reason Code: <number>' into the analyzer to get the diagnosis for it."
+    },
+    {
+      "cause": "DTS format: the reason is in the <Reason-Code> element of the same <Event> record.",
+      "next_check": "Paste the whole <Event>...</Event> record, including <Reason-Code data_type=\"0\">NN</Reason-Code>, and the analyzer will read it."
+    }
+  ]
+}

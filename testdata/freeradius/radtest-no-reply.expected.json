@@ -1,0 +1,7 @@
+{
+  "format": "freeradius",
+  "top": "freeradius/radclient-no-reply",
+  "matched": [
+    "freeradius/radclient-no-reply"
+  ]
+}

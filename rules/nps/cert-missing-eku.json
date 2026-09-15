@@ -1,0 +1,25 @@
+{
+  "id": "nps/cert-missing-eku",
+  "format": "nps",
+  "failure_stage": "cert_validation",
+  "title": "Reason Code 73/267/283/293/296: the client certificate lacks the Client Authentication purpose",
+  "plain_english": "EAP-TLS: the device presented a certificate that is valid and trusted, but its Enhanced Key Usage does not include Client Authentication (1.3.6.1.5.5.7.3.2), so NPS refuses to accept it as proof of identity. Usually a template problem, or the supplicant picking the wrong certificate from a store that holds several.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)(73|267|283|293|296)\\b",
+      "not configured with the Client Authentication purpose",
+      "does not contain the Client Authentication purpose"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The certificate template does not include Client Authentication in Application Policies.",
+      "next_check": "On the CA, open the template's Extensions tab > Application Policies; add Client Authentication, then re-enroll the affected devices (existing certificates do not change)."
+    },
+    {
+      "cause": "The device holds several certificates and the supplicant chose one meant for something else (a code-signing, S/MIME, or web-server certificate).",
+      "next_check": "In the Wi-Fi profile's EAP-TLS settings, restrict certificate selection by issuer or EKU (Windows: 'Use simple certificate selection' off, then filter); on the device check which certificate the profile actually uses."
+    }
+  ]
+}

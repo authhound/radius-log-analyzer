@@ -1,0 +1,7 @@
+{
+  "format": "nps",
+  "top": "nps/message-authenticator-invalid",
+  "matched": [
+    "nps/message-authenticator-invalid"
+  ]
+}

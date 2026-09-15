@@ -1,0 +1,24 @@
+{
+  "id": "nps/reason-code-112",
+  "format": "nps",
+  "failure_stage": "proxy",
+  "title": "Reason Code 112: the remote RADIUS server rejected the request",
+  "plain_english": "This NPS acted as a proxy: a connection request policy forwarded the request to a remote RADIUS server group, and that server answered Access-Reject. The local event only tells you the forward happened. The actual reason lives on the remote server.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)112\\b",
+      "remote server rejected the connection request"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The remote server denied the user for its own reason (credentials, policy, account state).",
+      "next_check": "On the remote server, find the 6273 event (or FreeRADIUS -X output) for the same account and timestamp and paste that here."
+    },
+    {
+      "cause": "The connection request policy forwards to the wrong server group, or strips/keeps the realm in a way the remote server does not expect.",
+      "next_check": "NPS console > Connection Request Policies > the policy named in the event > Settings > Authentication (forwarding target) and Attribute manipulation (User-Name rules)."
+    }
+  ]
+}

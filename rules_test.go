@@ -19,6 +19,7 @@ func TestRulesWellFormed(t *testing.T) {
 		"client_hello": true, "cert_validation": true, "inner_auth": true,
 		"timeout": true, "shared_secret": true, "eap_fragmentation": true,
 		"policy_match": true, "client_config": true, "user_account": true,
+		"backend": true, "proxy": true, "success": true, "unsupported_input": true,
 	}
 	rules := eng.Rules()
 	if len(rules) < 15 {

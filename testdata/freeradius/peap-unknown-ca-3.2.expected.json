@@ -1,0 +1,8 @@
+{
+  "format": "freeradius",
+  "top": "freeradius/tls-unknown-ca",
+  "matched": [
+    "freeradius/tls-unknown-ca",
+    "freeradius/tls-handshake-failed"
+  ]
+}

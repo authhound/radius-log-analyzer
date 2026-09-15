@@ -1,0 +1,30 @@
+{
+  "id": "nps/domain-unreachable",
+  "format": "nps",
+  "failure_stage": "backend",
+  "title": "Reason Code 4/5/6/261: NPS could not reach Active Directory",
+  "plain_english": "NPS could not talk to a domain controller or the global catalog, so it could not authenticate or authorize anyone. Every user fails at once, and nothing about their credentials matters until the NPS server can see the domain again.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)(4|5|6|261)\\b",
+      "unable to access the Active Directory Domain Services",
+      "unable to connect to a domain controller",
+      "cannot contact Active Directory Domain Services"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "No domain controller or global catalog reachable from the NPS server: DNS, firewall, or the DCs are down.",
+      "next_check": "On the NPS server run nltest /dsgetdc:<domain> and nltest /sc_verify:<domain>; check DNS resolution of the domain's SRV records."
+    },
+    {
+      "cause": "The NPS server's secure channel to the domain is broken.",
+      "next_check": "Test-ComputerSecureChannel -Repair -Credential <domain admin> on the NPS server, then restart the NPS service."
+    },
+    {
+      "cause": "The NPS server is not registered in Active Directory, so it cannot read account dial-in properties.",
+      "next_check": "NPS console > right-click NPS (Local) > Register server in Active Directory; confirm the computer account is in the 'RAS and IAS Servers' group in every domain it serves."
+    }
+  ]
+}

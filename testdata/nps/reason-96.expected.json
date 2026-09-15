@@ -1,0 +1,8 @@
+{
+  "format": "nps",
+  "top": "nps/reason-code-96",
+  "matched": [
+    "nps/reason-code-96",
+    "nps/event-6273-denied-generic"
+  ]
+}

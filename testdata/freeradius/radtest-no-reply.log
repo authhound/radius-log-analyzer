@@ -1,0 +1,11 @@
+Sent Access-Request Id 42 from 0.0.0.0:51234 to 192.168.10.2:1812 length 75
+	User-Name = "bob"
+	User-Password = "hello"
+	NAS-IP-Address = 192.168.10.9
+	NAS-Port = 0
+	Message-Authenticator = 0x00
+	Cleartext-Password = "hello"
+Sent Access-Request Id 42 from 0.0.0.0:51234 to 192.168.10.2:1812 length 75
+	User-Name = "bob"
+	User-Password = "hello"
+(0) No reply from server for ID 42 socket 3

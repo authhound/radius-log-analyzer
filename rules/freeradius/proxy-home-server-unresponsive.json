@@ -1,0 +1,30 @@
+{
+  "id": "freeradius/proxy-home-server-unresponsive",
+  "format": "freeradius",
+  "failure_stage": "proxy",
+  "title": "Proxy: the home server did not respond",
+  "plain_english": "This server forwarded the request to another RADIUS server (a realm in proxy.conf) and got nothing back, so it rejected the user itself. The user's credentials were never evaluated anywhere. Once enough requests time out, the home server is marked zombie and then dead, and every user of that realm fails until it recovers.",
+  "match": {
+    "any": [
+      "Failing proxied request",
+      "Home Server failed to respond",
+      "Marking home server .* as (zombie|dead)",
+      "No response to status check"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The home server is down or unreachable on UDP 1812 from this host.",
+      "next_check": "From this host, send a request straight to the home server with radtest or authhound-probe using the secret from proxy.conf."
+    },
+    {
+      "cause": "The shared secret between proxy and home server is wrong, so the home server drops the forwarded packets silently.",
+      "next_check": "On the home server, look for 'unknown client' or 'Shared secret is incorrect' with this proxy's IP (FreeRADIUS -X) or a 6274/event 13 (NPS)."
+    },
+    {
+      "cause": "The home server is slow and response_window is too short, or no status_check is configured so a dead server never comes back automatically.",
+      "next_check": "Review response_window, zombie_period and status_check in the home_server block; enable status-server checks if the home server supports them."
+    }
+  ]
+}

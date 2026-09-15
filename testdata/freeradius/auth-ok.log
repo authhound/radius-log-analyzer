@@ -1,0 +1,9 @@
+(2) Received Access-Request Id 7 from 192.168.10.5:50000 to 192.168.10.2:1812 length 75
+(2)   User-Name = "bob"
+(2) pap: Login attempt with password
+(2) pap: Comparing with "known good" Cleartext-Password
+(2) pap: User authenticated successfully
+(2)     [pap] = ok
+(2)   } # authenticate = ok
+(2) Login OK: [bob] (from client office-switch port 0)
+(2) Sent Access-Accept Id 7 from 192.168.10.2:1812 to 192.168.10.5:50000 length 20

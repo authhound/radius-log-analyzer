@@ -1,0 +1,31 @@
+{
+  "id": "freeradius/ldap-bind-failed",
+  "format": "freeradius",
+  "failure_stage": "backend",
+  "title": "LDAP: the server could not bind to the directory",
+  "plain_english": "Before it can look anyone up, FreeRADIUS binds to LDAP with the module's own identity (or, in bind-as-user mode, with the user's). That bind failed, so every user fails regardless of their password. One exception: if the DN that failed to bind is the user's own DN, this is really a wrong user password.",
+  "match": {
+    "any": [
+      "Bind credentials incorrect",
+      "Bind was not permitted",
+      "Bind with .* failed",
+      "ldap_initialize failed",
+      "Hit reconnection limit"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The identity or password in mods-available/ldap is wrong, expired, or locked.",
+      "next_check": "From the RADIUS host: ldapsearch -x -H <server> -D '<identity>' -w '<password>' -b '<base_dn>' '(objectClass=*)' -s base; fix the credentials the directory rejects."
+    },
+    {
+      "cause": "The directory is unreachable or the TLS setup is wrong ('Hit reconnection limit', ldap_initialize failures): wrong host/port, ldaps vs start_tls, or an untrusted server certificate.",
+      "next_check": "Check server, port, start_tls and the tls { ca_file } section in mods-available/ldap; test the TLS path with openssl s_client -connect <server>:636."
+    },
+    {
+      "cause": "Bind-as-user mode and the user's password is wrong.",
+      "next_check": "If the failing bind DN is the user's DN (cn=alice,...), treat this as a credential failure and test the user's password with ldapwhoami."
+    }
+  ]
+}

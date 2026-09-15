@@ -1,0 +1,8 @@
+{
+  "format": "nps",
+  "top": "nps/reason-code-3",
+  "matched": [
+    "nps/reason-code-3",
+    "nps/event-6274-discarded-generic"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "format": "freeradius",
+  "top": "freeradius/proxy-home-server-rejected",
+  "matched": [
+    "freeradius/proxy-home-server-rejected",
+    "freeradius/login-incorrect-generic"
+  ]
+}

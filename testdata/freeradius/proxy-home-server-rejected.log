@@ -1,0 +1,8 @@
+(4) Received Access-Request Id 21 from 192.168.10.5:50000 to 192.168.10.2:1812 length 75
+(4)   User-Name = "bob@corp.example.com"
+(4) suffix: Found realm "corp.example.com"
+(4) Proxying request to home server 192.168.20.5 port 1812 timeout 30.000000
+(4) Sent Access-Request Id 201 from 0.0.0.0:35000 to 192.168.20.5:1812 length 100
+(4) Received Access-Reject Id 201 from 192.168.20.5:1812 to 192.168.10.2:35000 length 20
+(4) Login incorrect (Home Server says so): [bob@corp.example.com] (from client office-switch port 0)
+(4) Sent Access-Reject Id 21 from 192.168.10.2:1812 to 192.168.10.5:50000 length 20

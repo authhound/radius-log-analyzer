@@ -1,0 +1,23 @@
+{
+  "id": "nps/message-authenticator-invalid",
+  "format": "nps",
+  "failure_stage": "shared_secret",
+  "title": "Message-Authenticator invalid (System log event 18): the shared secret does not match",
+  "plain_english": "NPS received an Access-Request whose Message-Authenticator did not verify. That attribute is an HMAC over the packet keyed with the shared secret, so a failure means the NAS and the RADIUS Client entry on NPS have different secrets. NPS drops the packet; the NAS sees a timeout.",
+  "match": {
+    "any": [
+      "Message-Authenticator attribute that is not valid"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "Shared secret mismatch.",
+      "next_check": "Re-enter the secret on the NAS and in NPS > RADIUS Clients > the client; watch for trailing spaces, pasted quotes, or a length limit on the NAS."
+    },
+    {
+      "cause": "The request matched a different RADIUS Client entry than intended (overlapping address ranges, NAT), which has another secret.",
+      "next_check": "Check which client entry covers the source IP in the event; make entries non-overlapping or pin the NAS source address."
+    }
+  ]
+}

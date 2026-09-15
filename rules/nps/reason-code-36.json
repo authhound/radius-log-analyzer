@@ -1,0 +1,28 @@
+{
+  "id": "nps/reason-code-36",
+  "format": "nps",
+  "failure_stage": "user_account",
+  "title": "Reason Code 36: the account is locked out",
+  "plain_english": "The account exceeded the domain's failed-logon threshold and is locked. With Wi-Fi this is very often self-inflicted: a phone or laptop with an old saved password retries every few seconds, locks the account, and keeps it locked. Unlocking without finding that device only buys a few minutes.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)36\\b",
+      "exceeded the maximum allowed number of failed attempts"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "A device with a stale saved Wi-Fi or VPN password is retrying in a loop.",
+      "next_check": "Filter the 6273 events for this account and read the Calling Station Identifier values: the MAC that appears every few seconds is the culprit; forget the network on that device."
+    },
+    {
+      "cause": "A genuine lockout after real failed attempts.",
+      "next_check": "Unlock in Active Directory Users and Computers (Account tab), then confirm the source with event 4740 on the PDC emulator, which names the caller computer."
+    },
+    {
+      "cause": "The lockout threshold is too low for 802.1X retry behaviour, where one wrong password produces several failures per minute.",
+      "next_check": "Review Account Lockout Policy (threshold and observation window) with the retry rate of your supplicants in mind."
+    }
+  ]
+}

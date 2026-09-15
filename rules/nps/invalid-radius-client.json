@@ -1,0 +1,23 @@
+{
+  "id": "nps/invalid-radius-client",
+  "format": "nps",
+  "failure_stage": "client_config",
+  "title": "NPS dropped the request: the NAS is not a registered RADIUS client (System log event 13)",
+  "plain_english": "NPS received a RADIUS packet from an IP address that is not configured as a RADIUS Client and discarded it without answering. From the NAS's side this looks like a timeout. Nothing about users or policies is evaluated until the client entry exists.",
+  "match": {
+    "any": [
+      "invalid RADIUS client IP address"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The NAS is not in NPS > RADIUS Clients, or is registered under a different IP (NAT, secondary interface, a DHCP address that changed).",
+      "next_check": "Copy the IP from the event and add or fix the RADIUS Client entry; on the NAS pin the RADIUS source interface so the address stays stable."
+    },
+    {
+      "cause": "A whole subnet of access points sends directly to NPS but only the controller is registered.",
+      "next_check": "Either register the address range (NPS accepts CIDR ranges in the client address field) or configure the access points to send via the controller."
+    }
+  ]
+}

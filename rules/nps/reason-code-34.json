@@ -1,0 +1,24 @@
+{
+  "id": "nps/reason-code-34",
+  "format": "nps",
+  "failure_stage": "user_account",
+  "title": "Reason Code 34: the account is disabled",
+  "plain_english": "NPS found the account and it is disabled in Active Directory. The credentials may well be correct; the account state blocks the logon before the password is even checked. If the User Name starts with 'host/', the disabled object is a computer account, not a person.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)34\\b",
+      "specified in the RADIUS Access-Request message is disabled"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "A user account was disabled (offboarding, HR sync, lockout policy) but a device still has the network profile and keeps trying.",
+      "next_check": "Confirm with Get-ADUser <name> -Properties Enabled; then use the event's Calling Station Identifier to find the device that keeps trying and remove the profile."
+    },
+    {
+      "cause": "Machine authentication with a disabled computer account (identity 'host/NAME').",
+      "next_check": "Look at the User Name in the event: if it starts with host/, check the computer object in Active Directory Users and Computers and re-enable or rejoin the machine."
+    }
+  ]
+}

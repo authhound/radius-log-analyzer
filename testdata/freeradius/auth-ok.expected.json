@@ -1,0 +1,7 @@
+{
+  "format": "freeradius",
+  "top": "freeradius/auth-succeeded",
+  "matched": [
+    "freeradius/auth-succeeded"
+  ]
+}

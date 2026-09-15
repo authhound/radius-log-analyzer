@@ -1,0 +1,28 @@
+{
+  "id": "nps/reason-code-117",
+  "format": "nps",
+  "failure_stage": "proxy",
+  "title": "Reason Code 117: the remote RADIUS server did not respond",
+  "plain_english": "This NPS proxied the request to a remote RADIUS server group and got no answer within the timeout, so it rejected the user locally. The credentials were never evaluated. A remote server that does not know this proxy, or disagrees on the shared secret, drops packets silently and looks exactly like a server that is down.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)117\\b",
+      "remote RADIUS server did not respond"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The remote server is down or UDP 1812 is blocked from this proxy.",
+      "next_check": "From the NPS proxy, send a test request to the remote server (authhound-probe or NTRadPing) with the group's shared secret; check firewall rules for UDP 1812/1813 in both directions."
+    },
+    {
+      "cause": "The remote server does not have this proxy as a RADIUS client, or the shared secret differs, so it drops the request silently.",
+      "next_check": "On the remote server look for 'unknown client' / 'Shared secret is incorrect' (FreeRADIUS -X) or System-log event 13 / 6274 (NPS) with this proxy's IP."
+    },
+    {
+      "cause": "The remote server group's timeout is too short for a slow backend (for example a remote MFA step).",
+      "next_check": "NPS console > Remote RADIUS Server Groups > the group > server > Load Balancing tab: raise 'Number of seconds without response before request is considered dropped'."
+    }
+  ]
+}

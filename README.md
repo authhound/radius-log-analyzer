@@ -48,8 +48,10 @@ Likely causes, most likely first:
 
 | Format | How to capture it |
 |---|---|
-| FreeRADIUS debug | Run the server in debug mode: `radiusd -X` (or `freeradius -X`) and copy the output around the failing request. |
-| Windows NPS events | Event Viewer → Security log → event 6273/6274 → right-click → **Copy details as text**. |
+| FreeRADIUS debug | Run the server in debug mode: `radiusd -X` (or `freeradius -X`) and copy the output around the failing request. Lines from `radius.log` (`Auth: ... Login incorrect`) and `radtest`/`radclient` output are recognised too. |
+| Windows NPS events | Event Viewer → Security log → event 6272/6273/6274 → right-click → **Copy details as text**. The XML view and the System-log events 13 and 18 work as well. IAS/DTS accounting log-file lines are recognised and redirected to the event log. |
+
+Rules are checked against the strings FreeRADIUS 3.0.x and 3.2.x actually emit (the `(TLS) ... recv/send ... Alert` wording changed in 3.2), and against Microsoft's NPS reason-code list.
 
 ## How diagnosis works
 

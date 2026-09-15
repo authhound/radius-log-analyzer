@@ -1,0 +1,8 @@
+{
+  "format": "freeradius",
+  "top": "freeradius/ldap-bind-failed",
+  "matched": [
+    "freeradius/ldap-bind-failed",
+    "freeradius/no-auth-type"
+  ]
+}

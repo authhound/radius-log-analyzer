@@ -1,0 +1,7 @@
+{
+  "format": "freeradius",
+  "top": "freeradius/radclient-rejected",
+  "matched": [
+    "freeradius/radclient-rejected"
+  ]
+}

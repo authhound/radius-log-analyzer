@@ -1,0 +1,25 @@
+{
+  "id": "nps/cert-name-mismatch",
+  "format": "nps",
+  "failure_stage": "cert_validation",
+  "title": "Reason Code 292/298: the identity does not match the client certificate",
+  "plain_english": "EAP-TLS: the certificate is trusted, but the user name the device sent does not match the certificate's subject or UPN, or the certificate has no user principal name NPS can map to an account. The certificate proves the device holds a key; NPS still needs to map it to an account, and that mapping failed.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)(292|298)\\b",
+      "does not match the value of the common name",
+      "does not contain a valid user principal name"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The certificate's Subject Alternative Name has no UPN (user certs) or no DNS name matching the computer account (machine certs).",
+      "next_check": "Open the certificate on the device and check the Subject Alternative Name; fix the template's Subject Name settings (include UPN / DNS name) and re-enroll."
+    },
+    {
+      "cause": "The identity the supplicant sends differs from what the certificate says: an anonymous or outer identity set on the profile, or a device signed into a different account.",
+      "next_check": "Compare the User Name in this event with the certificate's subject; on Windows check the profile's identity privacy / anonymous identity setting."
+    }
+  ]
+}

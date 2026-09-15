@@ -1,0 +1,9 @@
+(11) Received Access-Request Id 5 from 192.168.10.5:50000 to 192.168.10.2:1812 length 240
+(11)   User-Name = "bob"
+(11) eap_peap: (TLS) eap - recv TLS 1.3 Alert, fatal unknown_ca
+(11) eap_peap: ERROR: (TLS) Failed reading from OpenSSL: error:0A000418:SSL routines::tlsv1 alert unknown ca
+(11) eap_peap: ERROR: (TLS) System call (I/O) error (-1)
+(11) eap_peap: ERROR: (TLS) EAP Receive handshake failed during operation
+(11) eap_peap: ERROR: [eaptls process] = fail
+(11) eap: ERROR: Failed continuing EAP PEAP (25) session.  EAP sub-module failed
+(11) Sent Access-Reject Id 5 from 192.168.10.2:1812 to 192.168.10.5:50000 length 44

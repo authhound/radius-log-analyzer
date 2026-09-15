@@ -1,0 +1,8 @@
+(13) Received Access-Request Id 6 from 192.168.10.5:50000 to 192.168.10.2:1812 length 240
+(13)   User-Name = "printer-3"
+(13) eap_peap: (TLS) eap - recv TLS 1.0 Handshake, ClientHello
+(13) eap_peap: ERROR: (TLS) Failed reading from OpenSSL: error:0A000102:SSL routines::unsupported protocol
+(13) eap_peap: ERROR: (TLS) System call (I/O) error (-1)
+(13) eap_peap: ERROR: (TLS) EAP Receive handshake failed during operation
+(13) eap_peap: ERROR: [eaptls process] = fail
+(13) Sent Access-Reject Id 6 from 192.168.10.2:1812 to 192.168.10.5:50000 length 44

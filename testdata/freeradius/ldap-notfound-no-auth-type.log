@@ -1,0 +1,13 @@
+(6) Received Access-Request Id 10 from 192.168.10.5:50000 to 192.168.10.2:1812 length 75
+(6)   User-Name = "bob"
+rlm_ldap (ldap): Reserved connection (0)
+(6) ldap: EXPAND (uid=%{%{Stripped-User-Name}:-%{User-Name}})
+(6) ldap:    --> (uid=bob)
+(6) ldap: Performing search in "ou=people,dc=example,dc=org" with filter "(uid=bob)", scope "sub"
+(6) ldap: Waiting for search result...
+(6) ldap: Search returned no results
+rlm_ldap (ldap): Released connection (0)
+(6)     [ldap] = notfound
+(6) ERROR: No Auth-Type found: rejecting the user via Post-Auth-Type = Reject
+(6) Failed to authenticate the user
+(6) Sent Access-Reject Id 10 from 192.168.10.2:1812 to 192.168.10.5:50000 length 20

@@ -1,0 +1,29 @@
+{
+  "id": "freeradius/eap-session-did-not-finish",
+  "format": "freeradius",
+  "failure_stage": "cert_validation",
+  "title": "Client abandoned the TLS handshake after seeing the server certificate",
+  "plain_english": "The server sent its certificate in an Access-Challenge and the client never continued; a while later the server reaped the session and printed 'EAP session ... did not finish'. No error is logged because, from the server's side, nothing failed: the client just went silent. In most cases the device does not trust the server certificate and, unlike Windows sending an 'unknown CA' alert, phones and newer supplicants simply stop talking. This is the most common PEAP and EAP-TLS failure there is.",
+  "match": {
+    "any": [
+      "EAP session .* did not finish",
+      "Certificate_Compatibility"
+    ]
+  },
+  "priority": 85,
+  "causes": [
+    {
+      "cause": "The device does not trust the server certificate: the CA is not installed, or the Wi-Fi profile pins a different CA or server name. Android 11+ and iOS refuse without prompting.",
+      "next_check": "On one failing device, check the CA and server-name settings of the Wi-Fi profile against the certificate the server actually sends (openssl s_client or eapol_test shows the chain). Test with a device you can watch for a trust prompt."
+    },
+    {
+      "cause": "The server certificate lacks extensions clients require: the serverAuth EKU, or for Windows clients the Microsoft-specific OIDs the FreeRADIUS xpextensions file adds.",
+      "next_check": "Follow the wiki page named in the warning (Certificate_Compatibility) and compare the server certificate's extensions with the ones from FreeRADIUS's raddb/certs templates."
+    },
+    {
+      "cause": "The client never received the whole certificate: the chain is large, the Access-Challenge fragments are dropped, and the client times out waiting.",
+      "next_check": "If 'Discarding duplicate request' lines also appear, see the fragmentation diagnosis; try fragment_size = 1024 in the eap module and trim the chain."
+    }
+  ],
+  "doc_slug": "freeradius-tls-alert-unknown-ca"
+}

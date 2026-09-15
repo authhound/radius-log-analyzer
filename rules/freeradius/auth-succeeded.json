@@ -1,0 +1,29 @@
+{
+  "id": "freeradius/auth-succeeded",
+  "format": "freeradius",
+  "failure_stage": "success",
+  "title": "This request was accepted (Login OK / Access-Accept)",
+  "plain_english": "At least one request in this paste succeeded: the server logged 'Login OK' or sent an Access-Accept. If other diagnoses appear above this one, those are the failures in the same paste. If this is the only result and users still cannot connect, the RADIUS conversation is not the problem: look at what happens on the NAS after the Accept.",
+  "match": {
+    "any": [
+      "Login OK",
+      "Sent Access-Accept",
+      "Received Access-Accept"
+    ]
+  },
+  "priority": 60,
+  "causes": [
+    {
+      "cause": "The pasted request is from a working client, not the failing one.",
+      "next_check": "Reproduce with the failing device while radiusd -X runs and paste that request, from its 'Received Access-Request' line to its 'Sent Access-...' line (or to the point where the log goes quiet)."
+    },
+    {
+      "cause": "RADIUS accepted, but the NAS rejected the session afterwards: a VLAN in the reply that the switch/controller does not have, or a reply attribute it does not understand.",
+      "next_check": "Read the reply attributes under 'Sent Access-Accept' (Tunnel-Private-Group-Id, Filter-Id, vendor attributes) and confirm each one exists on the NAS; then check the NAS's own client/session log for the same MAC."
+    },
+    {
+      "cause": "The NAS never saw the Accept: the reply was sent to the wrong address or dropped on the way back (asymmetric NAT, firewall state timeout).",
+      "next_check": "Compare the 'to' address on the 'Sent Access-Accept' line with the NAS's real source address; capture on the NAS side if you can."
+    }
+  ]
+}

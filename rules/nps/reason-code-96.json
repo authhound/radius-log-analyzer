@@ -1,0 +1,28 @@
+{
+  "id": "nps/reason-code-96",
+  "format": "nps",
+  "failure_stage": "cert_validation",
+  "title": "Reason Code 96: the EAP session timed out (the client stopped answering)",
+  "plain_english": "NPS started the EAP conversation, sent its part, and the client never came back, so the session timed out. This is the NPS twin of FreeRADIUS's 'EAP session did not finish': the client most often stops because it does not trust the server certificate NPS presented, and modern devices do that silently. Fragmented, dropped Access-Challenge packets look the same.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)96\\b",
+      "EAP session timeout"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The client does not trust the NPS server certificate or the profile's server-name check fails, so it silently abandons the handshake.",
+      "next_check": "On a failing device, check the Wi-Fi profile's trusted root CA and 'verify the server's identity' settings against the certificate selected in the network policy's PEAP/EAP-TLS properties; on Windows clients look at the WLAN-AutoConfig event log."
+    },
+    {
+      "cause": "The certificate chain is large and the Access-Challenge fragments are dropped between NPS and the NAS.",
+      "next_check": "Check the chain size of the NPS certificate; capture on the NAS side for missing fragments; authhound-probe's path-MTU check tests this directly."
+    },
+    {
+      "cause": "The NAS RADIUS timeout is shorter than the EAP exchange, so it gives up and retries with a new session.",
+      "next_check": "Raise the per-server RADIUS timeout and retries on the NAS (5 seconds and 3 retries is a safe starting point)."
+    }
+  ]
+}

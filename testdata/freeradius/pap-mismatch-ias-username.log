@@ -1,0 +1,11 @@
+(8) Received Access-Request Id 12 from 192.168.10.5:50000 to 192.168.10.2:1812 length 75
+(8)   User-Name = "tobias"
+(8) pap: Login attempt with password
+(8) pap: Comparing with "known good" Cleartext-Password
+(8) pap: ERROR: Cleartext password does not match "known good" password
+(8)     [pap] = reject
+(8)   } # authenticate = reject
+(8) Failed to authenticate the user
+(8) Using Post-Auth-Type Reject
+(8) Login incorrect (pap: Cleartext password does not match "known good" password): [tobias] (from client office-switch port 0)
+(8) Sent Access-Reject Id 12 from 192.168.10.2:1812 to 192.168.10.5:50000 length 20

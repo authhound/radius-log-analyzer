@@ -1,0 +1,7 @@
+{
+  "format": "freeradius",
+  "top": "freeradius/eap-session-did-not-finish",
+  "matched": [
+    "freeradius/eap-session-did-not-finish"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "nps/reason-code-37",
+  "format": "nps",
+  "failure_stage": "policy_match",
+  "title": "Reason Code 37: outside the account's logon hours",
+  "plain_english": "The user account in Active Directory has logon-hours restrictions and the request arrived outside them. This is the AD account setting, not the NPS policy's day-and-time constraint (that one is Reason Code 68).",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)37\\b",
+      "According to AD DS user account logon hours"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "Logon hours are set on the account.",
+      "next_check": "Active Directory Users and Computers > the user > Account tab > Logon Hours; also check the time zone on the NPS server, which evaluates the restriction."
+    }
+  ]
+}

@@ -6,7 +6,7 @@
   "plain_english": "NPS looked up the account name the device sent and found nothing. The password never got checked — the identity itself didn't resolve. The interesting question is what name the device actually transmitted, and that's printed right in this event.",
   "match": {
     "any": [
-      "Reason Code:\\s*8\\b",
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)8\\b",
       "user account does not exist"
     ]
   },
