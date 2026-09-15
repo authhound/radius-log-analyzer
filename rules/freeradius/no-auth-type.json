@@ -1,0 +1,27 @@
+{
+  "id": "freeradius/no-auth-type",
+  "format": "freeradius",
+  "failure_stage": "user_account",
+  "title": "No module claimed the request: user not found, or no usable password",
+  "plain_english": "FreeRADIUS runs the authorize section to find out who the user is and how to check them. No module set Auth-Type, so there was nothing to authenticate with and the reject is automatic. Almost always this means no backend found the user, or a backend found the user but returned no password FreeRADIUS can use with this authentication method.",
+  "match": {
+    "any": [
+      "No Auth-Type found"
+    ]
+  },
+  "priority": 85,
+  "causes": [
+    {
+      "cause": "No backend found the user. The identity often carries a realm or domain prefix (user@corp.example.com, CORP\\\\user) that the lookup filter does not expect.",
+      "next_check": "Read the module results above this line ('[ldap] = notfound', 'SQL query returned no results', '[files] = noop'); compare User-Name with Stripped-User-Name and adjust realm stripping (suffix/ntdomain) or the lookup filter."
+    },
+    {
+      "cause": "The user was found but the password is stored in a form this auth method cannot use: MSCHAP needs a cleartext or NT-hash password, and pap will not set Auth-Type without a 'known good' password.",
+      "next_check": "Look for 'No \"known good\" password' or 'No NT-Password' in the same request; then check which password attribute the backend actually returns."
+    },
+    {
+      "cause": "The request landed in a virtual server whose authorize section does not list the backend module at all.",
+      "next_check": "Find the 'Virtual server ... received request' line and check that server's authorize section in sites-enabled/ lists ldap, sql, or files as needed."
+    }
+  ]
+}

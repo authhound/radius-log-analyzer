@@ -6,7 +6,7 @@
   "plain_english": "Authentication may even have been possible — but the connection attempt fell through every network policy without matching one, so NPS rejected it by default. The event tells you who tried; your policy conditions tell you why none of them claimed the request.",
   "match": {
     "any": [
-      "Reason Code:\\s*48\\b",
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)48\\b",
       "did not match any network policy"
     ]
   },

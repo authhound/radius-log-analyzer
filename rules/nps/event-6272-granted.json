@@ -1,0 +1,24 @@
+{
+  "id": "nps/event-6272-granted",
+  "format": "nps",
+  "failure_stage": "success",
+  "title": "NPS granted access (Event 6272)",
+  "plain_english": "This event records a successful authentication: NPS matched a policy and granted access. If users still cannot connect after a 6272, the problem is after RADIUS: the NAS did not apply the reply (VLAN missing on the switch, an attribute it does not understand), or a later step such as DHCP failed. If other diagnoses appear above this one, those are the failures in the same paste.",
+  "match": {
+    "any": [
+      "Network Policy Server granted access to a user",
+      "<EventID>6272</EventID>"
+    ]
+  },
+  "priority": 60,
+  "causes": [
+    {
+      "cause": "The pasted event is from a working client, not the failing one.",
+      "next_check": "In Event Viewer, filter the Security log for event 6273 and 6274 around the failure time, and paste one of those."
+    },
+    {
+      "cause": "RADIUS accepted, but the NAS rejected the session because of a reply attribute (VLAN not present on the switch/controller, unsupported vendor attribute).",
+      "next_check": "Compare the network policy's Settings > RADIUS Attributes with what the NAS supports, and check the NAS's client log for the same MAC after the Accept."
+    }
+  ]
+}

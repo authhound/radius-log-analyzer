@@ -1,0 +1,8 @@
+{
+  "format": "nps",
+  "top": "nps/cert-missing-eku",
+  "matched": [
+    "nps/cert-missing-eku",
+    "nps/event-6273-denied-generic"
+  ]
+}

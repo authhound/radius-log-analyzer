@@ -1,0 +1,25 @@
+{
+  "id": "nps/cert-expired",
+  "format": "nps",
+  "failure_stage": "cert_validation",
+  "title": "Reason Code 268/278: the client certificate has expired",
+  "plain_english": "EAP-TLS: the certificate the device presented is past its validity period. One device failing while others work means that device stopped renewing; many devices failing on the same day means a template or auto-enrollment path broke months ago and the certificates are now aging out together.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)(268|278)\\b",
+      "certificate provided by the connecting user or computer is expired",
+      "certificate that was provided by the connecting user or computer is expired"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The device certificate expired because auto-enrollment or MDM renewal stopped working.",
+      "next_check": "On the device, certlm.msc (computer) or certmgr.msc (user) shows the expiry; check the template's renewal period and the device's enrollment status (gpupdate /force, or the Intune/SCEP profile state)."
+    },
+    {
+      "cause": "Clock skew: the device or the NPS server has the wrong date, so a valid certificate looks expired.",
+      "next_check": "Compare the date and time on the failing device and on the NPS server before reissuing anything."
+    }
+  ]
+}

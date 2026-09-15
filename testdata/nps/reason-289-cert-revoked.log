@@ -1,0 +1,34 @@
+Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Date:          9/8/2026 10:12:33 AM
+Event ID:      6273
+Task Category: Network Policy Server
+Level:         Information
+Keywords:      Audit Failure
+Computer:      NPS01.corp.example.com
+Description:
+Network Policy Server denied access to a user.
+
+User:
+	Security ID:			CORP\jsmith
+	Account Name:			jsmith
+	Account Domain:			CORP
+
+NAS:
+	NAS IPv4 Address:		10.20.0.12
+	NAS Port-Type:			Wireless - IEEE 802.11
+
+RADIUS Client:
+	Client Friendly Name:		WLC-Floor1
+	Client IP Address:			10.20.0.12
+
+Authentication Details:
+	Connection Request Policy Name:	Secure Wireless Connections
+	Network Policy Name:		Corp WiFi Access
+	Authentication Provider:		Windows
+	Authentication Server:		NPS01.corp.example.com
+	Authentication Type:		EAP
+	EAP Type:			-
+	Account Session Identifier:		-
+	Reason Code:			289
+	Reason:				Authentication failed. The certificate provided by the connecting user or computer is revoked and is not valid.

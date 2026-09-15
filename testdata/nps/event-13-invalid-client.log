@@ -1,0 +1,10 @@
+Log Name:      System
+Source:        NPS
+Date:          9/8/2026 10:20:11 AM
+Event ID:      13
+Task Category: None
+Level:         Warning
+Keywords:      Classic
+Computer:      NPS01.corp.example.com
+Description:
+A RADIUS message was received from the invalid RADIUS client IP address 10.20.0.44.

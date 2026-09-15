@@ -1,0 +1,24 @@
+{
+  "id": "nps/reason-code-19",
+  "format": "nps",
+  "failure_stage": "inner_auth",
+  "title": "Reason Code 19: CHAP needs a reversibly encrypted password, and the account has none",
+  "plain_english": "The NAS used CHAP. To verify a CHAP response, NPS needs the user's password in reversible form, and by default Active Directory only keeps a one-way hash. So every CHAP logon fails unless the account (or the domain) stores passwords with reversible encryption and the user has changed their password since that was enabled.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)19\\b",
+      "CHAP is not configured to store a reversibly encrypted"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The NAS is configured for CHAP where MS-CHAPv2 or PEAP would work.",
+      "next_check": "Switch the NAS's authentication method to MS-CHAPv2 (or PEAP/EAP-TLS for 802.1X) and allow it in the network policy; this avoids reversible passwords altogether."
+    },
+    {
+      "cause": "CHAP is required and reversible encryption is not enabled, or was enabled after the last password change.",
+      "next_check": "Enable 'Store password using reversible encryption' on the account (or by policy), then have the user change their password once so it is stored in the new form."
+    }
+  ]
+}

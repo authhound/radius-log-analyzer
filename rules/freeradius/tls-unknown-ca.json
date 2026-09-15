@@ -6,9 +6,9 @@
   "plain_english": "The TLS handshake was aborted by the client device: it sent a fatal 'unknown CA' alert, meaning it does not trust the certificate your RADIUS server presented. This is a client-side trust decision — the handshake died before the server ever saw the user's credentials.",
   "match": {
     "any": [
-      "TLS Alert read:fatal:unknown CA",
-      "alert unknown ca",
-      "unknown_ca"
+      "Alert read:fatal:unknown CA",
+      "tlsv1 alert unknown ca",
+      "recv TLS [0-9.]+ Alert, fatal unknown_ca"
     ]
   },
   "priority": 100,

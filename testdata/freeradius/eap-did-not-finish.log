@@ -1,0 +1,14 @@
+(5) Received Access-Request Id 3 from 192.168.10.5:50000 to 192.168.10.2:1812 length 232
+(5)   User-Name = "carol"
+(5) eap_peap: (TLS) eap - send TLS 1.2 Handshake, ServerHello
+(5) eap_peap: (TLS) eap - send TLS 1.2 Handshake, Certificate
+(5) eap_peap: (TLS) eap - send TLS 1.2 Handshake, ServerHelloDone
+(5) eap_peap: (TLS) eap - Server : Need to read more data: SSLv3/TLS write server done
+(5) eap: Sending EAP Request (code 1) ID 2 length 1004
+(5) Sent Access-Challenge Id 3 from 192.168.10.2:1812 to 192.168.10.5:50000 length 1064
+Waking up in 4.9 seconds.
+(5) Cleaning up request packet ID 3 with timestamp +6 due to cleanup_delay was reached
+WARNING: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: !! EAP session with state 0x1c3d27e11c3f2e7d8a2f7b1f0f6a5e0b did not finish!                  !!
+WARNING: !! Please read http://wiki.freeradius.org/guide/Certificate_Compatibility     !!
+WARNING: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

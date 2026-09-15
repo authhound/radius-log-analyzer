@@ -1,0 +1,25 @@
+{
+  "id": "nps/cert-revoked",
+  "format": "nps",
+  "failure_stage": "cert_validation",
+  "title": "Reason Code 256/289: the client certificate is revoked",
+  "plain_english": "EAP-TLS: NPS checked the certificate revocation list and the device's certificate is on it. Revocation is deliberate: someone revoked it when the device was retired, the user left, or a new certificate was issued. The device still has the old one and keeps presenting it.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)(256|289)\\b",
+      "proof of their identity is a revoked certificate",
+      "certificate provided by the connecting user or computer is revoked"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The revoked certificate is still installed on the device and is selected for 802.1X, even if a newer one exists.",
+      "next_check": "On the device, delete the revoked certificate from the personal store and re-enroll (or restrict certificate selection in the Wi-Fi profile so the new one is used)."
+    },
+    {
+      "cause": "The certificate was revoked by mistake, or as part of a CA cleanup.",
+      "next_check": "On the CA, check the revocation reason for this serial number; if it was an error, revocation cannot be undone: issue a new certificate."
+    }
+  ]
+}

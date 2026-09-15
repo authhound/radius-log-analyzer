@@ -1,0 +1,27 @@
+{
+  "id": "freeradius/radclient-rejected",
+  "format": "freeradius",
+  "failure_stage": "inner_auth",
+  "title": "radtest/radclient: the server answered Access-Reject",
+  "plain_english": "This is the client-side view from radtest or radclient. The good news: the server received the request and the shared secret is right (with a wrong secret you would get no reply at all). The server simply said no, and the reason is only visible on the server side. Nothing in this output can tell you why.",
+  "match": {
+    "all": [
+      "Expected Access-Accept got Access-Reject"
+    ]
+  },
+  "priority": 80,
+  "causes": [
+    {
+      "cause": "The user is not in any backend, or the password is wrong. radtest sends PAP, so the backend must return a password FreeRADIUS can compare against.",
+      "next_check": "Stop the service, run radiusd -X on the server, repeat the radtest, and paste the server output here instead: look for 'No Auth-Type found', 'No \"known good\" password', or 'does not match \"known good\"'."
+    },
+    {
+      "cause": "The user exists but the stored password is in a form PAP cannot check (for example only an NT hash with pap disabled), or the authorize section never calls the backend module.",
+      "next_check": "In the server's -X output find the module lines for this request ('[ldap] = notfound', '[sql] = noop', 'files: ...'): the first module that should have found the user tells you where to look."
+    },
+    {
+      "cause": "A policy rejects the request before authentication: a users-file DEFAULT entry, an unlang 'reject' in authorize, or a realm that proxies to a dead home server.",
+      "next_check": "Search the server's -X output for 'Auth-Type = Reject', 'Invalid user', or 'Proxying request'."
+    }
+  ]
+}

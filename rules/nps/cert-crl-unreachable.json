@@ -1,0 +1,30 @@
+{
+  "id": "nps/cert-crl-unreachable",
+  "format": "nps",
+  "failure_stage": "cert_validation",
+  "title": "Reason Code 258/259/291: NPS cannot check the certificate revocation list",
+  "plain_english": "EAP-TLS: the client certificate may be fine, but NPS could not fetch or validate the CRL it needs to prove the certificate is not revoked, so it failed the authentication. Everyone fails at once, typically right after the CA's CRL expired or a web server hosting the CRL went away.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)(258|259|291)\\b",
+      "cannot access the certificate revocation list",
+      "manages the certificate revocation list is not available",
+      "cannot locate and access the certificate revocation list"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "The CRL distribution point in the client certificate is unreachable from the NPS server (HTTP blocked, LDAP path only valid inside the forest, decommissioned host).",
+      "next_check": "On the NPS server run certutil -urlfetch -verify <client cert.cer> and see which CDP URL fails; fix reachability or add a reachable CDP to the CA."
+    },
+    {
+      "cause": "The CRL published by the CA has expired.",
+      "next_check": "On the CA run certutil -crl to publish a fresh CRL and check the CRL publication interval and any offline root CA whose CRL is manually published."
+    },
+    {
+      "cause": "You need service back before the PKI is fixed.",
+      "next_check": "As a documented stopgap, set IgnoreNoRevocationCheck and IgnoreRevocationOffline (DWORD 1) under HKLM\\SYSTEM\\CurrentControlSet\\Services\\RasMan\\PPP\\EAP\\13 on the NPS server and restart NPS; remove them once the CRL is reachable."
+    }
+  ]
+}

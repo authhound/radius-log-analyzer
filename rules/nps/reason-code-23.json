@@ -6,7 +6,7 @@
   "plain_english": "NPS hit an internal error while running EAP. The official text says 'check EAP log files', but in the field this is almost always a problem with the NPS server's OWN certificate — expired, missing its private key, or not meeting 802.1X requirements — rather than anything the client did.",
   "match": {
     "any": [
-      "Reason Code:\\s*23\\b",
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)23\\b",
       "during the Network Policy Server use of the Extensible Authentication Protocol"
     ]
   },

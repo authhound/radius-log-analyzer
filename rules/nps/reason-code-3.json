@@ -1,0 +1,28 @@
+{
+  "id": "nps/reason-code-3",
+  "format": "nps",
+  "failure_stage": "shared_secret",
+  "title": "Reason Code 3: malformed Access-Request (usually a wrong shared secret)",
+  "plain_english": "NPS received a RADIUS packet it could not parse or verify and discarded it (Event 6274). In practice the packet is rarely malformed: when the shared secret differs between the NAS and the RADIUS client entry on NPS, the Message-Authenticator check fails and NPS reports the packet as malformed. The user's credentials were never looked at.",
+  "match": {
+    "any": [
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)3\\b",
+      "received from the network access server was malformed"
+    ]
+  },
+  "priority": 100,
+  "causes": [
+    {
+      "cause": "Shared secret mismatch between the NAS and the RADIUS Client entry on NPS.",
+      "next_check": "Re-enter the secret on both sides (NPS console > RADIUS Clients > the client > Shared secret); watch for trailing spaces, quotes copied from a config file, or a secret longer than the NAS supports."
+    },
+    {
+      "cause": "The request arrives from a different IP than the RADIUS Client entry (NAT, secondary interface), so NPS matched a different client entry with a different secret.",
+      "next_check": "Compare 'Client IP Address' in the event with the NAS's configured source address; on the NAS pin the RADIUS source interface."
+    },
+    {
+      "cause": "Genuinely malformed packet: a truncated UDP fragment or a vendor attribute NPS cannot decode.",
+      "next_check": "Capture on the NPS server (pktmon or Wireshark) and look at the failing Access-Request: length mismatch or fragmentation points at the network, an odd VSA at the NAS firmware."
+    }
+  ]
+}

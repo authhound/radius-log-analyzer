@@ -1,0 +1,8 @@
+{
+  "format": "nps",
+  "top": "nps/cert-untrusted-ca",
+  "matched": [
+    "nps/cert-untrusted-ca",
+    "nps/event-6273-denied-generic"
+  ]
+}

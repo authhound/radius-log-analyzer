@@ -6,7 +6,7 @@
   "plain_english": "The request was rejected one layer earlier than usual: it didn't match any Connection Request Policy, so NPS never even evaluated network policies or credentials. CRPs filter on how/where the request arrived — day and time, NAS address, port type — not on who the user is.",
   "match": {
     "any": [
-      "Reason Code:\\s*49\\b",
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)49\\b",
       "did not match any connection request policy"
     ]
   },

@@ -1,0 +1,8 @@
+{
+  "format": "nps",
+  "top": "nps/reason-code-48",
+  "matched": [
+    "nps/reason-code-48",
+    "nps/log-file-format"
+  ]
+}

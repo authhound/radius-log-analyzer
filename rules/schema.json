@@ -23,7 +23,11 @@
         "eap_fragmentation",
         "policy_match",
         "client_config",
-        "user_account"
+        "user_account",
+        "backend",
+        "proxy",
+        "success",
+        "unsupported_input"
       ]
     },
     "title": { "type": "string", "maxLength": 90 },

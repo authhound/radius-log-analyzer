@@ -1,0 +1,9 @@
+Sent Access-Request Id 118 from 0.0.0.0:47257 to 127.0.0.1:1812 length 75
+	User-Name = "bob"
+	User-Password = "hello"
+	NAS-IP-Address = 127.0.1.1
+	NAS-Port = 0
+	Message-Authenticator = 0x00
+	Cleartext-Password = "hello"
+Received Access-Reject Id 118 from 127.0.0.1:1812 to 127.0.0.1:47257 length 20
+(0) -: Expected Access-Accept got Access-Reject

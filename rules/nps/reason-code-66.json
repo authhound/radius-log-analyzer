@@ -6,7 +6,7 @@
   "plain_english": "A network policy matched, but the client tried to authenticate with a method that policy doesn't allow. Client and server each did their job — they just don't agree on HOW to authenticate. The event's 'Authentication Type' and 'EAP Type' fields versus the policy's constraints tell the whole story.",
   "match": {
     "any": [
-      "Reason Code:\\s*66\\b",
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)66\\b",
       "authentication method that is not enabled on the matching network policy"
     ]
   },

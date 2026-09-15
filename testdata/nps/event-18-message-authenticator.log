@@ -1,0 +1,10 @@
+Log Name:      System
+Source:        NPS
+Date:          9/8/2026 10:21:40 AM
+Event ID:      18
+Task Category: None
+Level:         Warning
+Keywords:      Classic
+Computer:      NPS01.corp.example.com
+Description:
+An Access-Request message was received from RADIUS client 10.20.0.12 with a Message-Authenticator attribute that is not valid.

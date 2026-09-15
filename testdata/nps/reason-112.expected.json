@@ -1,0 +1,8 @@
+{
+  "format": "nps",
+  "top": "nps/reason-code-112",
+  "matched": [
+    "nps/reason-code-112",
+    "nps/event-6273-denied-generic"
+  ]
+}

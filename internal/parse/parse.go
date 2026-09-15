@@ -17,8 +17,12 @@ const (
 	FormatUnknown    Format = "unknown"
 )
 
+// npsRe covers Event Viewer text (6272/6273/6274), the Event Viewer XML view,
+// NPS System-log events 13/18, and the IAS/DTS accounting log-file formats.
+// `IAS` is word-bounded: unanchored it matched "tobias" or "alias" inside
+// FreeRADIUS output and flipped the format to NPS.
 var (
-	npsRe = regexp.MustCompile(`(?i)Network Policy Server|Reason Code:|Event ID:\s*62(72|73)|IAS`)
+	npsRe = regexp.MustCompile(`(?i)Network Policy Server|Reason Code:|Event ID:\s*627[234]|<EventID>627[234]</EventID>|Name="ReasonCode"|\bIAS\b|<Reason-Code data_type=|<Packet-Type data_type=|invalid RADIUS client IP address|Message-Authenticator attribute that is not valid`)
 	frRe  = regexp.MustCompile(`(?i)FreeRADIUS|radiusd|Access-(Request|Accept|Reject|Challenge)|rlm_|eap_(peap|tls|ttls|md5)|\(\d+\) `)
 )
 

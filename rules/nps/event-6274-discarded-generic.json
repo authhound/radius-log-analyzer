@@ -1,0 +1,24 @@
+{
+  "id": "nps/event-6274-discarded-generic",
+  "format": "nps",
+  "failure_stage": "client_config",
+  "title": "NPS discarded the request (Event 6274)",
+  "plain_english": "Event 6274 means NPS did not evaluate the request at all: it could not parse or verify the packet, or it arrived in a state NPS refuses to process. The decisive detail is the Reason Code line. If a more specific diagnosis appears above this one, that is your answer; if this generic result is all you got, the pasted text is probably missing the Reason Code / Reason lines.",
+  "match": {
+    "any": [
+      "Network Policy Server discarded the request",
+      "<EventID>6274</EventID>"
+    ]
+  },
+  "priority": 5,
+  "causes": [
+    {
+      "cause": "Most 6274 events are a shared-secret mismatch reported as a malformed packet (Reason Code 3) or an unverified signature (Reason Code 262).",
+      "next_check": "Read the Reason Code line; re-enter the shared secret on both the NAS and the RADIUS Client entry."
+    },
+    {
+      "cause": "The pasted event text is incomplete.",
+      "next_check": "In Event Viewer, right-click the 6274 event > 'Copy details as text' and paste the whole event including the Authentication Details section."
+    }
+  ]
+}

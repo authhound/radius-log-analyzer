@@ -6,7 +6,7 @@
   "plain_english": "Everything else was fine — the user's own AD account says no. The 'Network Access Permission' setting on the account's Dial-in tab is set to 'Deny access', and that overrides your NPS policies. This is a per-account setting, so it typically hits one user while everyone else connects normally.",
   "match": {
     "any": [
-      "Reason Code:\\s*65\\b",
+      "(Reason Code:\\s*|Name=\"ReasonCode\">|<Reason-Code data_type=\"0\">)65\\b",
       "Network Access Permission.*[Dd]eny",
       "denied access.*dial-?in"
     ]

@@ -1,0 +1,8 @@
+{
+  "format": "freeradius",
+  "top": "freeradius/ldap-user-not-found",
+  "matched": [
+    "freeradius/ldap-user-not-found",
+    "freeradius/no-auth-type"
+  ]
+}

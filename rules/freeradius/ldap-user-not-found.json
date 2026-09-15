@@ -1,0 +1,28 @@
+{
+  "id": "freeradius/ldap-user-not-found",
+  "format": "freeradius",
+  "failure_stage": "user_account",
+  "title": "LDAP: the user lookup returned nothing",
+  "plain_english": "The LDAP bind and the search both worked; the directory just has no object matching the filter for this User-Name. The search line a few lines up ('Performing search in ... with filter ...') shows exactly what was asked, and that is usually where the mismatch is.",
+  "match": {
+    "any": [
+      "Search returned no results",
+      "\\[ldap[^\\]]*\\] = notfound"
+    ]
+  },
+  "priority": 95,
+  "causes": [
+    {
+      "cause": "The identity contains a realm or domain prefix that the filter does not strip, so the directory is asked for 'user@corp.example.com' or 'CORP\\\\user'.",
+      "next_check": "Compare User-Name with Stripped-User-Name in the debug output; enable the suffix/ntdomain policy or change the filter to use %{Stripped-User-Name}."
+    },
+    {
+      "cause": "Wrong base DN, scope, or filter attribute (uid vs sAMAccountName vs userPrincipalName).",
+      "next_check": "Copy the base DN and filter from the 'Performing search' line and run the same ldapsearch by hand with the module's bind identity."
+    },
+    {
+      "cause": "The bind identity cannot see the user's OU, so the search legitimately returns nothing.",
+      "next_check": "Run the ldapsearch as the module's identity, not as an admin; if the admin finds the user and the module identity does not, fix the directory ACLs."
+    }
+  ]
+}

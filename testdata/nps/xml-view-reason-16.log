@@ -1,0 +1,18 @@
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-Security-Auditing" Guid="{54849625-5478-4994-a5ba-3e3b0328c30d}" />
+    <EventID>6273</EventID>
+    <Task>12552</Task>
+    <Keywords>0x8010000000000000</Keywords>
+    <Channel>Security</Channel>
+    <Computer>NPS01.corp.example.com</Computer>
+  </System>
+  <EventData>
+    <Data Name="SubjectUserName">jsmith</Data>
+    <Data Name="SubjectDomainName">CORP</Data>
+    <Data Name="AuthenticationType">PEAP</Data>
+    <Data Name="EAPType">Microsoft: Secured password (EAP-MSCHAP v2)</Data>
+    <Data Name="ReasonCode">16</Data>
+    <Data Name="Reason">Authentication failed due to a user credentials mismatch. Either the user name provided does not map to an existing user account or the password was incorrect.</Data>
+  </EventData>
+</Event>

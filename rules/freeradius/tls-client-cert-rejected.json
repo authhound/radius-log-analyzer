@@ -1,0 +1,31 @@
+{
+  "id": "freeradius/tls-client-cert-rejected",
+  "format": "freeradius",
+  "failure_stage": "cert_validation",
+  "title": "Server rejected the CLIENT certificate (EAP-TLS): issuer not trusted",
+  "plain_english": "This is the mirror image of the usual 'unknown CA' failure: the alert was written by the server, not read from the client. The device presented a certificate whose chain the RADIUS server cannot verify against its ca_file, so the server aborted the handshake. The device may be perfectly fine; the server's trust store is what decides.",
+  "match": {
+    "any": [
+      "Alert write:fatal:unknown CA",
+      "send TLS [0-9.]+ Alert, fatal unknown_ca",
+      "certificate verify failed",
+      "unable to get (local )?issuer certificate"
+    ]
+  },
+  "priority": 110,
+  "causes": [
+    {
+      "cause": "ca_file does not contain the CA that issued the client certificates, or is missing an intermediate in that chain.",
+      "next_check": "On the server: openssl verify -CAfile <ca_file from mods-available/eap> <client cert>; ca_file must hold the root and every intermediate, concatenated."
+    },
+    {
+      "cause": "Devices enrolled from a different CA than the server was set up for (a new PKI, Intune/SCEP, a cloud CA).",
+      "next_check": "On a failing device, read the client certificate's issuer chain and compare it with the CAs in ca_file."
+    },
+    {
+      "cause": "The client sends only its leaf certificate and the server has no copy of the intermediate to complete the chain.",
+      "next_check": "Add the intermediate CA certificates to ca_file, or configure the client to send its full chain."
+    }
+  ],
+  "doc_slug": "freeradius-tls-alert-unknown-ca"
+}

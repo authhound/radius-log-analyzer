@@ -1,0 +1,20 @@
+Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Date:          9/8/2026 10:15:02 AM
+Event ID:      6272
+Task Category: Network Policy Server
+Level:         Information
+Keywords:      Audit Success
+Computer:      NPS01.corp.example.com
+Description:
+Network Policy Server granted access to a user.
+
+User:
+	Security ID:			CORP\jsmith
+	Account Name:			jsmith
+
+Authentication Details:
+	Connection Request Policy Name:	Secure Wireless Connections
+	Network Policy Name:		Corp WiFi Access
+	Authentication Type:		PEAP
+	EAP Type:			Microsoft: Secured password (EAP-MSCHAP v2)
